@@ -20,11 +20,20 @@ if [ -n "$PORT" ]; then
     sed -i "s/80/$PORT/g" /etc/apache2/ports.conf /etc/apache2/sites-available/*.conf
 fi
 
-# Ensure SQLite file exists with write permissions
+# Ensure storage directories exist
+mkdir -p /var/www/html/storage/framework/sessions
+mkdir -p /var/www/html/storage/framework/views
+mkdir -p /var/www/html/storage/framework/cache/data
+mkdir -p /var/www/html/storage/logs
+mkdir -p /var/www/html/bootstrap/cache
 mkdir -p /var/www/html/database
+
+# Ensure SQLite file exists
 touch /var/www/html/database/database.sqlite
-chown -R www-data:www-data /var/www/html/database
-chmod -R 775 /var/www/html/database
+
+# Set 777 permissions so Apache (www-data) can read/write everything without restriction
+chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database
+chmod -R 777 /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database
 
 # Clear cache first to reload new env
 php artisan config:clear || true
