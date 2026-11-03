@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Portal | InternTrack - Enterprise Internship Platform</title>
+    <title>Admin Portal | InternTrack</title>
 
     <!-- Google Fonts: Plus Jakarta Sans & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Bootstrap 5 & Bootstrap Icons -->
+    <!-- Bootstrap 5 & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
@@ -18,11 +18,8 @@
         :root {
             --primary: #2563EB;
             --primary-hover: #1D4ED8;
-            --primary-light: #EFF6FF;
-            --dark-navy: #0A0F1D;
-            --surface-dark: #111827;
+            --navy-dark: #0A0F1D;
             --border-color: #E2E8F0;
-            --text-muted: #64748B;
         }
 
         * {
@@ -33,40 +30,54 @@
 
         body {
             min-height: 100vh;
-            background-color: #FFFFFF;
-            font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #F1F5F9;
+            /* Subtle tech grid background pattern */
+            background-image: radial-gradient(#CBD5E1 1px, transparent 1px);
+            background-size: 24px 24px;
+            font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
             color: #0F172A;
-            overflow-x: hidden;
-        }
-
-        .split-layout {
-            min-height: 100vh;
             display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 20px;
         }
 
-        /* LEFT BRANDING HERO SECTION */
-        .brand-panel {
-            flex: 1.15;
-            background: radial-gradient(circle at 20% 20%, #1E40AF 0%, #0F172A 70%, #020617 100%);
-            color: #FFFFFF;
+        /* MASTER FRAMED BOX CONTAINER */
+        .portal-card {
+            width: 100%;
+            max-width: 1140px;
+            min-height: 620px;
+            background: #FFFFFF;
+            border-radius: 20px;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.14), 0 0 0 1px rgba(15, 23, 42, 0.04);
+            display: flex;
+            overflow: hidden;
             position: relative;
-            padding: 56px 64px;
+        }
+
+        /* LEFT BRANDING HERO (INSIDE FRAME) */
+        .brand-panel {
+            flex: 1.1;
+            background: linear-gradient(150deg, #1E3A8A 0%, #0F172A 60%, #020617 100%);
+            color: #FFFFFF;
+            padding: 44px 48px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            position: relative;
             overflow: hidden;
         }
 
-        /* Abstract glowing background shapes */
         .brand-panel::before {
             content: '';
             position: absolute;
-            width: 480px;
-            height: 480px;
+            width: 380px;
+            height: 380px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, rgba(37, 99, 235, 0) 70%);
-            top: -120px;
-            left: -120px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.28) 0%, rgba(37, 99, 235, 0) 70%);
+            top: -100px;
+            left: -100px;
             filter: blur(40px);
             pointer-events: none;
         }
@@ -74,13 +85,13 @@
         .brand-panel::after {
             content: '';
             position: absolute;
-            width: 420px;
-            height: 420px;
+            width: 320px;
+            height: 320px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, rgba(79, 70, 229, 0) 70%);
-            bottom: -80px;
-            right: -80px;
-            filter: blur(50px);
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.22) 0%, rgba(79, 70, 229, 0) 70%);
+            bottom: -60px;
+            right: -60px;
+            filter: blur(40px);
             pointer-events: none;
         }
 
@@ -94,28 +105,27 @@
             align-items: center;
             gap: 12px;
             background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            backdrop-filter: blur(12px);
-            padding: 10px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
             border-radius: 12px;
-            margin-bottom: 24px;
         }
 
         .brand-logo-icon {
-            width: 36px;
-            height: 36px;
+            width: 34px;
+            height: 34px;
             background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 18px;
             color: #FFFFFF;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.4);
         }
 
         .brand-logo-text {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 800;
             letter-spacing: -0.5px;
             color: #FFFFFF;
@@ -128,32 +138,31 @@
         .brand-center {
             position: relative;
             z-index: 2;
-            margin: 40px 0;
-            max-width: 580px;
+            margin: 28px 0;
         }
 
         .hero-pill {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(59, 130, 246, 0.16);
-            border: 1px solid rgba(96, 165, 250, 0.3);
+            gap: 6px;
+            background: rgba(59, 130, 246, 0.18);
+            border: 1px solid rgba(96, 165, 250, 0.35);
             color: #93C5FD;
-            font-size: 0.8125rem;
-            font-weight: 600;
-            padding: 6px 14px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 5px 12px;
             border-radius: 999px;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.6px;
         }
 
         .hero-heading {
-            font-size: 2.75rem;
+            font-size: 2.15rem;
             font-weight: 800;
-            line-height: 1.18;
-            letter-spacing: -1px;
-            margin-bottom: 18px;
+            line-height: 1.22;
+            letter-spacing: -0.8px;
+            margin-bottom: 12px;
             color: #F8FAFC;
         }
 
@@ -164,58 +173,59 @@
         }
 
         .hero-subtitle {
-            font-size: 1.05rem;
-            line-height: 1.6;
+            font-size: 0.9375rem;
+            line-height: 1.55;
             color: #94A3B8;
-            margin-bottom: 36px;
+            margin-bottom: 24px;
         }
 
-        /* Glassmorphic Showcase Cards */
+        /* 2x2 Grid Stats Cards */
         .career-stat-cards {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
+            gap: 12px;
         }
 
         .stat-card {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(14px);
-            border-radius: 12px;
-            padding: 18px 20px;
-            transition: all 0.3s ease;
+            backdrop-filter: blur(12px);
+            border-radius: 10px;
+            padding: 14px 16px;
+            transition: all 0.25s ease;
         }
 
         .stat-card:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(96, 165, 250, 0.35);
+            background: rgba(255, 255, 255, 0.09);
+            border-color: rgba(96, 165, 250, 0.4);
             transform: translateY(-2px);
         }
 
         .stat-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            background: rgba(59, 130, 246, 0.2);
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            background: rgba(59, 130, 246, 0.22);
             color: #60A5FA;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            margin-bottom: 12px;
+            font-size: 15px;
+            margin-bottom: 8px;
         }
 
         .stat-number {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 800;
             color: #FFFFFF;
             letter-spacing: -0.5px;
+            line-height: 1.1;
         }
 
         .stat-label {
-            font-size: 0.8125rem;
+            font-size: 0.75rem;
             color: #94A3B8;
-            margin-top: 2px;
+            margin-top: 3px;
         }
 
         .brand-footer {
@@ -225,15 +235,9 @@
             align-items: center;
             justify-content: space-between;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 20px;
+            padding-top: 16px;
             color: #64748B;
-            font-size: 0.8125rem;
-        }
-
-        .trust-badges {
-            display: flex;
-            align-items: center;
-            gap: 18px;
+            font-size: 0.75rem;
         }
 
         .trust-badge-item {
@@ -247,35 +251,35 @@
             color: #10B981;
         }
 
-        /* RIGHT LOGIN FORM SECTION */
+        /* RIGHT LOGIN FORM (INSIDE FRAME) */
         .login-panel {
-            flex: 0.85;
+            flex: 0.9;
             background: #FFFFFF;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 48px 40px;
+            padding: 44px 46px;
             position: relative;
         }
 
         .login-wrapper {
             width: 100%;
-            max-width: 420px;
+            max-width: 380px;
         }
 
         .login-badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 5px 12px;
+            padding: 4px 10px;
             border-radius: 6px;
             background: #F1F5F9;
             color: #475569;
             font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.6px;
-            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
         }
 
         .login-badge i {
@@ -283,29 +287,27 @@
         }
 
         .login-title {
-            font-size: 1.875rem;
+            font-size: 1.65rem;
             font-weight: 800;
-            letter-spacing: -0.7px;
+            letter-spacing: -0.6px;
             color: #0F172A;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .login-desc {
-            font-size: 0.9375rem;
-            color: var(--text-muted);
-            margin-bottom: 28px;
-            line-height: 1.5;
+            font-size: 0.875rem;
+            color: #64748B;
+            margin-bottom: 22px;
+            line-height: 1.45;
         }
 
         /* Form elements - Modern Square Aesthetic */
         .form-group-custom {
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
 
         .form-label-custom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            display: block;
             font-size: 0.8125rem;
             font-weight: 600;
             color: #1E293B;
@@ -320,21 +322,21 @@
 
         .input-icon {
             position: absolute;
-            left: 14px;
+            left: 13px;
             color: #94A3B8;
-            font-size: 1rem;
+            font-size: 0.95rem;
             pointer-events: none;
             transition: color 0.2s;
         }
 
         .input-custom {
             width: 100%;
-            height: 48px;
-            padding: 10px 14px 10px 42px;
+            height: 46px;
+            padding: 10px 14px 10px 40px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
             background: #F8FAFC;
-            font-size: 0.9375rem;
+            font-size: 0.9rem;
             color: #0F172A;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             outline: none;
@@ -343,7 +345,7 @@
         .input-custom:focus {
             background: #FFFFFF;
             border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
         }
 
         .input-box:focus-within .input-icon {
@@ -357,12 +359,12 @@
             border: none;
             color: #94A3B8;
             cursor: pointer;
-            padding: 6px;
+            padding: 4px;
             border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
+            font-size: 0.95rem;
             transition: color 0.2s;
         }
 
@@ -372,7 +374,7 @@
 
         .btn-submit {
             width: 100%;
-            height: 48px;
+            height: 46px;
             background: var(--primary);
             color: #FFFFFF;
             border: none;
@@ -385,18 +387,14 @@
             gap: 8px;
             cursor: pointer;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
-            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.22);
+            margin-top: 8px;
         }
 
         .btn-submit:hover {
             background: var(--primary-hover);
-            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+            box-shadow: 0 6px 18px rgba(37, 99, 235, 0.3);
             transform: translateY(-1px);
-        }
-
-        .btn-submit:active {
-            transform: translateY(0);
         }
 
         /* 1-Click Demo Credentials Pill */
@@ -404,18 +402,18 @@
             background: #F8FAFC;
             border: 1px dashed #CBD5E1;
             border-radius: 8px;
-            padding: 12px 14px;
-            margin-top: 22px;
+            padding: 10px 12px;
+            margin-top: 18px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
+            gap: 10px;
         }
 
         .demo-text {
-            font-size: 0.8125rem;
+            font-size: 0.775rem;
             color: #334155;
-            line-height: 1.4;
+            line-height: 1.35;
         }
 
         .demo-text strong {
@@ -429,7 +427,7 @@
             color: var(--primary);
             font-weight: 700;
             font-size: 0.75rem;
-            padding: 6px 12px;
+            padding: 5px 10px;
             border-radius: 6px;
             cursor: pointer;
             white-space: nowrap;
@@ -442,27 +440,32 @@
             color: #FFFFFF;
         }
 
-        /* Responsive layout */
+        /* Responsive */
         @media (max-width: 992px) {
-            .split-layout {
+            body {
+                padding: 16px;
+            }
+
+            .portal-card {
                 flex-direction: column;
+                min-height: auto;
             }
 
             .brand-panel {
-                padding: 36px 24px;
+                padding: 32px 24px;
                 flex: none;
             }
 
             .hero-heading {
-                font-size: 2rem;
+                font-size: 1.75rem;
             }
 
             .career-stat-cards {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
             }
 
             .login-panel {
-                padding: 40px 24px;
+                padding: 36px 24px;
                 flex: none;
             }
         }
@@ -471,7 +474,8 @@
 
 <body>
 
-<div class="split-layout">
+<!-- FRAMED PROFESSIONAL PORTAL CONTAINER -->
+<div class="portal-card">
 
     <!-- LEFT SIDE: CAREER SHOWCASE & BRANDING -->
     <div class="brand-panel">
@@ -491,7 +495,7 @@
         <!-- Center Hero Content -->
         <div class="brand-center">
             <div class="hero-pill">
-                <i class="bi bi-stars"></i> Next-Gen Career & Internship Platform
+                <i class="bi bi-stars"></i> Next-Gen Career & Internship Hub
             </div>
 
             <h1 class="hero-heading">
@@ -500,17 +504,17 @@
             </h1>
 
             <p class="hero-subtitle">
-                The centralized enterprise hub connecting students, accredited universities, and verified corporate partners for high-impact internship opportunities.
+                The centralized enterprise ecosystem connecting students, universities, and top corporate employers for high-impact internship opportunities.
             </p>
 
-            <!-- Stat & Trust Badges -->
+            <!-- 2x2 Stat Cards -->
             <div class="career-stat-cards">
                 <div class="stat-card">
                     <div class="stat-icon">
                         <i class="bi bi-buildings"></i>
                     </div>
                     <div class="stat-number">500+</div>
-                    <div class="stat-label">Verified Tech Companies</div>
+                    <div class="stat-label">Verified Companies</div>
                 </div>
 
                 <div class="stat-card">
@@ -518,7 +522,7 @@
                         <i class="bi bi-mortarboard"></i>
                     </div>
                     <div class="stat-number">12,000+</div>
-                    <div class="stat-label">Students Placed Globally</div>
+                    <div class="stat-label">Students Placed</div>
                 </div>
 
                 <div class="stat-card">
@@ -526,7 +530,7 @@
                         <i class="bi bi-graph-up-arrow"></i>
                     </div>
                     <div class="stat-number">98.4%</div>
-                    <div class="stat-label">Interview Success Rate</div>
+                    <div class="stat-label">Placement Success</div>
                 </div>
 
                 <div class="stat-card">
@@ -534,31 +538,31 @@
                         <i class="bi bi-shield-check"></i>
                     </div>
                     <div class="stat-number">Real-Time</div>
-                    <div class="stat-label">Application Tracking</div>
+                    <div class="stat-label">Tracking Console</div>
                 </div>
             </div>
         </div>
 
         <!-- Bottom Trust Footer -->
         <div class="brand-footer">
-            <div class="trust-badges">
+            <div class="d-flex align-items-center gap-3">
                 <div class="trust-badge-item">
                     <i class="bi bi-check-circle-fill"></i>
                     <span>ISO 27001 Secure</span>
                 </div>
                 <div class="trust-badge-item">
                     <i class="bi bi-check-circle-fill"></i>
-                    <span>Role-Based Access</span>
+                    <span>Enterprise RBAC</span>
                 </div>
             </div>
             <div>
-                © {{ date('Y') }} InternTrack Inc.
+                © {{ date('Y') }} InternTrack
             </div>
         </div>
 
     </div>
 
-    <!-- RIGHT SIDE: PROFESSIONAL SQUARE-STYLE LOGIN -->
+    <!-- RIGHT SIDE: MODERN SQUARE-STYLE LOGIN FORM -->
     <div class="login-panel">
         <div class="login-wrapper">
 
@@ -567,7 +571,7 @@
             </div>
 
             <h2 class="login-title">Sign in to console</h2>
-            <p class="login-desc">Enter your administrative credentials to manage students, companies, and internship placements.</p>
+            <p class="login-desc">Enter your credentials to manage students, companies, and internship placements.</p>
 
             <!-- Status Alerts -->
             @if(session('success'))
@@ -596,9 +600,7 @@
 
                 <!-- Email Input -->
                 <div class="form-group-custom">
-                    <label class="form-label-custom" for="adminEmail">
-                        <span>Work Email Address</span>
-                    </label>
+                    <label class="form-label-custom" for="adminEmail">Work Email Address</label>
                     <div class="input-box">
                         <i class="bi bi-envelope input-icon"></i>
                         <input
@@ -616,9 +618,7 @@
 
                 <!-- Password Input -->
                 <div class="form-group-custom">
-                    <label class="form-label-custom" for="passwordInput">
-                        <span>Password</span>
-                    </label>
+                    <label class="form-label-custom" for="passwordInput">Password</label>
                     <div class="input-box">
                         <i class="bi bi-key input-icon"></i>
                         <input
@@ -636,7 +636,7 @@
                     </div>
                 </div>
 
-                <!-- Remember Me & Forgot Password -->
+                <!-- Remember Me -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="form-check">
                         <input
@@ -660,7 +660,7 @@
                 </button>
             </form>
 
-            <!-- 1-Click Demo Credentials for Recruiters / LinkedIn Visitors -->
+            <!-- 1-Click Demo Credentials for Recruiters -->
             <div class="demo-credentials-card">
                 <div class="demo-text">
                     <strong>Demo Admin Access:</strong>
@@ -671,9 +671,8 @@
                 </button>
             </div>
 
-            <!-- Footer copyright -->
-            <div class="text-center text-muted small mt-4 pt-3 border-top" style="border-color: #F1F5F9 !important;">
-                InternTrack Enterprise v2.4 · High Security Environment
+            <div class="text-center text-muted small mt-3 pt-2 border-top" style="border-color: #F1F5F9 !important; font-size: 0.725rem;">
+                InternTrack Enterprise Console v2.4
             </div>
 
         </div>
