@@ -6,20 +6,24 @@ if [ -z "$APP_KEY" ]; then
     export APP_KEY="base64:Z//La0Qs/OSutnIfm3xqY/nGUCd+EKAr+t7SaWKz/Tc="
 fi
 export APP_ENV="${APP_ENV:-production}"
-export APP_DEBUG="${APP_DEBUG:-true}"
-export DB_CONNECTION="${DB_CONNECTION:-sqlite}"
+export APP_DEBUG="true"
+export DB_CONNECTION="sqlite"
+export DB_DATABASE="/var/www/html/database/database.sqlite"
 export SESSION_DRIVER="file"
 export CACHE_STORE="file"
 export QUEUE_CONNECTION="sync"
+export LOG_CHANNEL="stderr"
 
 # Pass environment variables to Apache
 echo "export APP_KEY='$APP_KEY'" >> /etc/apache2/envvars
 echo "export APP_ENV='$APP_ENV'" >> /etc/apache2/envvars
-echo "export APP_DEBUG='$APP_DEBUG'" >> /etc/apache2/envvars
-echo "export DB_CONNECTION='$DB_CONNECTION'" >> /etc/apache2/envvars
+echo "export APP_DEBUG='true'" >> /etc/apache2/envvars
+echo "export DB_CONNECTION='sqlite'" >> /etc/apache2/envvars
+echo "export DB_DATABASE='/var/www/html/database/database.sqlite'" >> /etc/apache2/envvars
 echo "export SESSION_DRIVER='file'" >> /etc/apache2/envvars
 echo "export CACHE_STORE='file'" >> /etc/apache2/envvars
 echo "export QUEUE_CONNECTION='sync'" >> /etc/apache2/envvars
+echo "export LOG_CHANNEL='stderr'" >> /etc/apache2/envvars
 
 # Set custom port if provided by cloud host (Render, Railway, etc.)
 if [ -n "$PORT" ]; then
@@ -34,10 +38,8 @@ mkdir -p /var/www/html/storage/logs
 mkdir -p /var/www/html/bootstrap/cache
 mkdir -p /var/www/html/database
 
-# Ensure SQLite file exists
+# Ensure SQLite file exists with 777 permissions
 touch /var/www/html/database/database.sqlite
-
-# Set 777 permissions so Apache (www-data) can read/write everything without restriction
 chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database
 chmod -R 777 /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database
 
