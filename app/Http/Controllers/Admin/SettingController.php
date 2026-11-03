@@ -28,37 +28,11 @@ class SettingController extends Controller
 
     public function updateProfile(Request $request)
     {
-        $admin = auth()->user();
-
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $admin->id],
-        ]);
-
-        $admin->update($validated);
-
-        return back()->with('success', 'Profile details updated successfully.');
+        return back()->with('error', '🔒 Demo Mode Protected: Modifying master administrator profile details is disabled to ensure continuous evaluation access for LinkedIn reviewers and recruiters.');
     }
 
     public function updatePassword(Request $request)
     {
-        $request->validate([
-            'current_password' => ['required', 'string'],
-            'password' => ['required', 'string', 'min:8', 'confirmed', Password::defaults()],
-        ]);
-
-        $admin = auth()->user();
-
-        if (!Hash::check($request->current_password, $admin->password)) {
-            return back()->withErrors([
-                'current_password' => 'The provided current password does not match our records.',
-            ]);
-        }
-
-        $admin->update([
-            'password' => Hash::make($request->password),
-        ]);
-
-        return back()->with('success', 'Password changed successfully.');
+        return back()->with('error', '🔒 Demo Mode Protected: Password alteration is disabled for this portfolio demo so that all reviewers can log in seamlessly with the public credentials (admin@interntrack.com / password123).');
     }
 }

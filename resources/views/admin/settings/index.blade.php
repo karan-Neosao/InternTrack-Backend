@@ -23,6 +23,22 @@
     </div>
 </div>
 
+<!-- LinkedIn Demo Notice Banner -->
+<div class="alert border-0 shadow-sm d-flex align-items-center gap-3 p-3 mb-4" style="background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%); border-left: 4px solid #2563EB !important; border-radius: 12px;">
+    <div class="d-flex align-items-center justify-content-center text-primary rounded-circle flex-shrink-0" style="width: 44px; height: 44px; background: #FFFFFF; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15); font-size: 1.35rem;">
+        <i class="bi bi-shield-lock-fill"></i>
+    </div>
+    <div class="flex-grow-1">
+        <div class="fw-bold text-dark d-flex align-items-center gap-2" style="font-size: 0.95rem;">
+            <span>Public Demo Mode Active</span>
+            <span class="badge bg-primary text-white rounded-pill px-2.5 py-0.5" style="font-size: 0.7rem;">PORTFOLIO SAFEGUARD</span>
+        </div>
+        <div class="text-secondary small mt-0.5">
+            To ensure every recruiter and reviewer visiting from LinkedIn has uninterrupted access, credentials editing and password changes are securely locked in read-only mode.
+        </div>
+    </div>
+</div>
+
 <div class="row g-4">
 
     <!-- Left Column: Profile & Security -->
@@ -30,105 +46,119 @@
 
         <!-- Admin Profile Details -->
         <div class="card p-4 mb-4 shadow-sm border-0">
-            <h5 class="fw-bold mb-1 d-flex align-items-center gap-2">
-                <i class="bi bi-person-badge-fill text-primary"></i>
-                <span>Profile Details</span>
-            </h5>
-            <p class="text-secondary small mb-4">Update your display name and administrative notification email.</p>
+            <div class="d-flex justify-content-between align-items-center mb-1">
+                <h5 class="fw-bold mb-0 d-flex align-items-center gap-2">
+                    <i class="bi bi-person-badge-fill text-primary"></i>
+                    <span>Profile Details</span>
+                </h5>
+                <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25 rounded-pill px-2.5 py-1 small">
+                    <i class="bi bi-lock-fill"></i> Read Only
+                </span>
+            </div>
+            <p class="text-secondary small mb-3">Administrator display name and primary contact email.</p>
 
             <form action="{{ route('admin.settings.profile') }}" method="POST">
                 @csrf
                 @method('PUT')
 
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Admin Full Name <span class="text-danger">*</span></label>
+                    <label class="form-label fw-semibold text-muted small">Admin Full Name</label>
                     <input
                         type="text"
                         name="name"
-                        class="form-control @error('name') is-invalid @enderror"
-                        value="{{ old('name', $admin->name) }}"
-                        required
+                        class="form-control bg-light"
+                        value="{{ $admin->name }}"
+                        readonly
+                        disabled
                     >
-                    @error('name')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
                 </div>
 
                 <div class="mb-4">
-                    <label class="form-label fw-semibold">Email Address <span class="text-danger">*</span></label>
+                    <label class="form-label fw-semibold text-muted small">Email Address</label>
                     <input
                         type="email"
                         name="email"
-                        class="form-control @error('email') is-invalid @enderror"
-                        value="{{ old('email', $admin->email) }}"
-                        required
+                        class="form-control bg-light"
+                        value="{{ $admin->email }}"
+                        readonly
+                        disabled
                     >
-                    @error('email')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <div class="form-text text-muted small mt-1.5">
+                        <i class="bi bi-info-circle me-1"></i> Preserved for public evaluation access.
+                    </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary d-flex align-items-center gap-2 shadow-sm px-4">
-                    <i class="bi bi-check-circle-fill"></i>
-                    <span>Save Profile Changes</span>
+                <button type="button" class="btn btn-secondary d-flex align-items-center gap-2 shadow-sm px-4" disabled style="opacity: 0.65; cursor: not-allowed;">
+                    <i class="bi bi-lock-fill"></i>
+                    <span>Profile Modification Locked</span>
                 </button>
             </form>
         </div>
 
-        <!-- Security / Password Change -->
+        <!-- Security / Password Change (LOCKED FOR DEMO) -->
         <div class="card p-4 shadow-sm border-0">
-            <h5 class="fw-bold mb-1 d-flex align-items-center gap-2">
-                <i class="bi bi-shield-lock-fill text-warning"></i>
-                <span>Security & Password</span>
-            </h5>
-            <p class="text-secondary small mb-4">Ensure your account is protected with a strong, secure passphrase.</p>
+            <div class="d-flex justify-content-between align-items-center mb-1">
+                <h5 class="fw-bold mb-0 d-flex align-items-center gap-2">
+                    <i class="bi bi-shield-lock-fill text-warning"></i>
+                    <span>Security & Password</span>
+                </h5>
+                <span class="badge bg-warning bg-opacity-10 text-warning-emphasis border border-warning border-opacity-25 rounded-pill px-2.5 py-1 small fw-bold">
+                    <i class="bi bi-lock-fill"></i> Disabled in Demo
+                </span>
+            </div>
+            <p class="text-secondary small mb-3">Password alteration is disabled so other LinkedIn reviewers are never locked out.</p>
+
+            <div class="p-3 mb-4 rounded-3 border" style="background: #F8FAFC; border-color: #E2E8F0 !important;">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                    <span class="text-dark fw-bold small"><i class="bi bi-key-fill text-primary me-1"></i> Public Demo Admin Credentials:</span>
+                    <span class="badge bg-success-subtle text-success border border-success border-opacity-25">Permanent</span>
+                </div>
+                <div class="d-flex flex-wrap gap-3 small text-secondary">
+                    <div><strong>Email:</strong> <code class="text-primary fw-bold">admin@interntrack.com</code></div>
+                    <div><strong>Password:</strong> <code class="text-primary fw-bold">password123</code></div>
+                </div>
+            </div>
 
             <form action="{{ route('admin.settings.password') }}" method="POST">
                 @csrf
                 @method('PUT')
 
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Current Password <span class="text-danger">*</span></label>
+                    <label class="form-label fw-semibold text-muted small">Current Password</label>
                     <input
                         type="password"
-                        name="current_password"
-                        class="form-control @error('current_password') is-invalid @enderror"
-                        placeholder="••••••••"
-                        required
+                        class="form-control bg-light"
+                        value="password123"
+                        disabled
+                        readonly
                     >
-                    @error('current_password')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">New Password <span class="text-danger">*</span></label>
+                    <label class="form-label fw-semibold text-muted small">New Password</label>
                     <input
                         type="password"
-                        name="password"
-                        class="form-control @error('password') is-invalid @enderror"
-                        placeholder="Minimum 8 characters"
-                        required
+                        class="form-control bg-light"
+                        placeholder="••••••••••••"
+                        disabled
+                        readonly
                     >
-                    @error('password')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
                 </div>
 
                 <div class="mb-4">
-                    <label class="form-label fw-semibold">Confirm New Password <span class="text-danger">*</span></label>
+                    <label class="form-label fw-semibold text-muted small">Confirm New Password</label>
                     <input
                         type="password"
-                        name="password_confirmation"
-                        class="form-control"
-                        placeholder="Re-enter new password"
-                        required
+                        class="form-control bg-light"
+                        placeholder="••••••••••••"
+                        disabled
+                        readonly
                     >
                 </div>
 
-                <button type="submit" class="btn btn-primary d-flex align-items-center gap-2 shadow-sm px-4">
-                    <i class="bi bi-key-fill"></i>
-                    <span>Update Password</span>
+                <button type="button" class="btn btn-secondary d-flex align-items-center gap-2 shadow-sm px-4" disabled style="opacity: 0.65; cursor: not-allowed;">
+                    <i class="bi bi-lock-fill"></i>
+                    <span>Password Change Disabled</span>
                 </button>
             </form>
         </div>
