@@ -7,6 +7,7 @@ if [ -z "$APP_KEY" ]; then
 fi
 export APP_ENV="${APP_ENV:-production}"
 export APP_DEBUG="true"
+export APP_URL="https://interntrack-backend-uicp.onrender.com"
 export DB_CONNECTION="sqlite"
 export DB_DATABASE="/var/www/html/database/database.sqlite"
 export SESSION_DRIVER="file"
@@ -18,6 +19,7 @@ export LOG_CHANNEL="stderr"
 echo "export APP_KEY='$APP_KEY'" >> /etc/apache2/envvars
 echo "export APP_ENV='$APP_ENV'" >> /etc/apache2/envvars
 echo "export APP_DEBUG='true'" >> /etc/apache2/envvars
+echo "export APP_URL='https://interntrack-backend-uicp.onrender.com'" >> /etc/apache2/envvars
 echo "export DB_CONNECTION='sqlite'" >> /etc/apache2/envvars
 echo "export DB_DATABASE='/var/www/html/database/database.sqlite'" >> /etc/apache2/envvars
 echo "export SESSION_DRIVER='file'" >> /etc/apache2/envvars

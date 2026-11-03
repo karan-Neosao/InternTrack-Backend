@@ -12,16 +12,19 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
 
-->withMiddleware(function (Middleware $middleware) {
-    $middleware->redirectTo(
-        guests: '/admin/login',
-        users: '/admin/dashboard',
-    );
+    ->withMiddleware(function (Middleware $middleware) {
+        // Trust Cloudflare and Render reverse proxies for proper HTTPS protocol detection
+        $middleware->trustProxies(at: '*');
 
-    $middleware->alias([
-        'admin' => \App\Http\Middleware\EnsureAdmin::class,
-    ]);
-})
+        $middleware->redirectTo(
+            guests: '/admin/login',
+            users: '/admin/dashboard',
+        );
+
+        $middleware->alias([
+            'admin' => \App\Http\Middleware\EnsureAdmin::class,
+        ]);
+    })
 
     ->withExceptions(function (Exceptions $exceptions) {
         //
