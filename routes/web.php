@@ -14,9 +14,9 @@ use App\Http\Controllers\Admin\SettingController;
 
 Route::get('/', function () {
     if (auth()->check() && auth()->user()->role === 'admin') {
-        return redirect()->route('admin.dashboard');
+        return redirect('/admin/dashboard');
     }
-    return redirect()->route('admin.login');
+    return redirect('/admin/login');
 });
 
 Route::prefix('admin')->name('admin.')->group(function () {

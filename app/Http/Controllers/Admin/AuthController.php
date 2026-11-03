@@ -30,7 +30,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             return redirect()
-                ->intended(route('admin.dashboard'))
+                ->to('/admin/dashboard')
                 ->with('success', 'Welcome to InternTrack Admin!');
         }
 
@@ -49,7 +49,7 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()
-            ->route('admin.login')
+            ->to('/admin/login')
             ->with('success', 'You have been logged out successfully.');
     }
 }
