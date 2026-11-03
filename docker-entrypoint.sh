@@ -8,12 +8,18 @@ fi
 export APP_ENV="${APP_ENV:-production}"
 export APP_DEBUG="${APP_DEBUG:-true}"
 export DB_CONNECTION="${DB_CONNECTION:-sqlite}"
+export SESSION_DRIVER="file"
+export CACHE_STORE="file"
+export QUEUE_CONNECTION="sync"
 
 # Pass environment variables to Apache
 echo "export APP_KEY='$APP_KEY'" >> /etc/apache2/envvars
 echo "export APP_ENV='$APP_ENV'" >> /etc/apache2/envvars
 echo "export APP_DEBUG='$APP_DEBUG'" >> /etc/apache2/envvars
 echo "export DB_CONNECTION='$DB_CONNECTION'" >> /etc/apache2/envvars
+echo "export SESSION_DRIVER='file'" >> /etc/apache2/envvars
+echo "export CACHE_STORE='file'" >> /etc/apache2/envvars
+echo "export QUEUE_CONNECTION='sync'" >> /etc/apache2/envvars
 
 # Set custom port if provided by cloud host (Render, Railway, etc.)
 if [ -n "$PORT" ]; then
