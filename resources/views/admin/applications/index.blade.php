@@ -33,7 +33,7 @@
 <!-- 4 Top KPI Metric Cards -->
 <div class="row g-3 mb-4">
     <div class="col-6 col-md-3">
-        <div class="card p-3 border-0 shadow-sm h-100">
+        <a href="{{ route('admin.applications') }}" class="card p-3 border-0 shadow-sm h-100 kpi-card" title="View All Applications">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <span class="text-muted fw-bold text-uppercase small" style="font-size: 0.7rem;">Total Received</span>
@@ -46,11 +46,11 @@
             <div class="text-muted small mt-2 pt-2 border-top" style="font-size: 0.75rem;">
                 All applications on portal
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="col-6 col-md-3">
-        <div class="card p-3 border-0 shadow-sm h-100">
+        <a href="{{ route('admin.applications', ['status' => 'pending']) }}" class="card p-3 border-0 shadow-sm h-100 kpi-card" title="Filter Pending Review">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <span class="text-muted fw-bold text-uppercase small" style="font-size: 0.7rem;">Pending Review</span>
@@ -63,11 +63,11 @@
             <div class="text-warning small mt-2 pt-2 border-top fw-semibold" style="font-size: 0.75rem;">
                 <i class="bi bi-exclamation-circle"></i> Requires attention
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="col-6 col-md-3">
-        <div class="card p-3 border-0 shadow-sm h-100">
+        <a href="{{ route('admin.applications', ['status' => 'reviewed']) }}" class="card p-3 border-0 shadow-sm h-100 kpi-card" title="Filter Under Review">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <span class="text-muted fw-bold text-uppercase small" style="font-size: 0.7rem;">Under Review</span>
@@ -80,11 +80,11 @@
             <div class="text-primary small mt-2 pt-2 border-top fw-semibold" style="font-size: 0.75rem;">
                 <i class="bi bi-arrow-repeat"></i> Interview stage
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="col-6 col-md-3">
-        <div class="card p-3 border-0 shadow-sm h-100">
+        <a href="{{ route('admin.applications', ['status' => 'accepted']) }}" class="card p-3 border-0 shadow-sm h-100 kpi-card" title="Filter Accepted Offers">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <span class="text-muted fw-bold text-uppercase small" style="font-size: 0.7rem;">Offers Accepted</span>
@@ -97,7 +97,7 @@
             <div class="text-success small mt-2 pt-2 border-top fw-semibold" style="font-size: 0.75rem;">
                 <i class="bi bi-check-all"></i> Placements successful
             </div>
-        </div>
+        </a>
     </div>
 </div>
 

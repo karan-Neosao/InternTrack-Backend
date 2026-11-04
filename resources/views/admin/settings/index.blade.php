@@ -307,7 +307,7 @@
         <!-- Analytics Metric Cards -->
         <div class="row g-3 mb-4">
             <div class="col-sm-6 col-xl-3">
-                <div class="card p-3 border-0 shadow-sm rounded-3 d-flex flex-row align-items-center gap-3">
+                <a href="{{ route('admin.settings', ['tab' => 'activity']) }}" class="card p-3 border-0 shadow-sm rounded-3 d-flex flex-row align-items-center gap-3 kpi-card" title="View All Visits">
                     <div class="rounded-3 d-flex align-items-center justify-content-center text-primary" style="width: 50px; height: 50px; background: rgba(37, 99, 235, 0.1); font-size: 1.5rem;">
                         <i class="bi bi-eye-fill"></i>
                     </div>
@@ -315,11 +315,11 @@
                         <div class="text-secondary small fw-medium">Total Website Visits</div>
                         <div class="fs-4 fw-bold text-dark">{{ number_format($activityStats['total_visits'] ?? 0) }}</div>
                     </div>
-                </div>
+                </a>
             </div>
 
             <div class="col-sm-6 col-xl-3">
-                <div class="card p-3 border-0 shadow-sm rounded-3 d-flex flex-row align-items-center gap-3">
+                <a href="{{ route('admin.settings', ['tab' => 'activity']) }}" class="card p-3 border-0 shadow-sm rounded-3 d-flex flex-row align-items-center gap-3 kpi-card" title="View Unique Visitors">
                     <div class="rounded-3 d-flex align-items-center justify-content-center text-success" style="width: 50px; height: 50px; background: rgba(16, 185, 129, 0.1); font-size: 1.5rem;">
                         <i class="bi bi-globe-americas"></i>
                     </div>
@@ -327,11 +327,11 @@
                         <div class="text-secondary small fw-medium">Unique IP Addresses</div>
                         <div class="fs-4 fw-bold text-dark">{{ number_format($activityStats['unique_ips'] ?? 0) }}</div>
                     </div>
-                </div>
+                </a>
             </div>
 
             <div class="col-sm-6 col-xl-3">
-                <div class="card p-3 border-0 shadow-sm rounded-3 d-flex flex-row align-items-center gap-3">
+                <a href="{{ route('admin.settings', ['tab' => 'activity']) }}" class="card p-3 border-0 shadow-sm rounded-3 d-flex flex-row align-items-center gap-3 kpi-card" title="View Today's Visits">
                     <div class="rounded-3 d-flex align-items-center justify-content-center text-info" style="width: 50px; height: 50px; background: rgba(6, 182, 212, 0.1); font-size: 1.5rem;">
                         <i class="bi bi-calendar2-check-fill"></i>
                     </div>
@@ -339,11 +339,11 @@
                         <div class="text-secondary small fw-medium">Today's Visits</div>
                         <div class="fs-4 fw-bold text-dark">{{ number_format($activityStats['today_visits'] ?? 0) }}</div>
                     </div>
-                </div>
+                </a>
             </div>
 
             <div class="col-sm-6 col-xl-3">
-                <div class="card p-3 border-0 shadow-sm rounded-3 d-flex flex-row align-items-center gap-3">
+                <a href="{{ route('admin.settings', ['tab' => 'activity']) }}" class="card p-3 border-0 shadow-sm rounded-3 d-flex flex-row align-items-center gap-3 kpi-card" title="View User vs Guest Visits">
                     <div class="rounded-3 d-flex align-items-center justify-content-center text-warning" style="width: 50px; height: 50px; background: rgba(245, 158, 11, 0.1); font-size: 1.5rem;">
                         <i class="bi bi-person-fill-lock"></i>
                     </div>
@@ -353,7 +353,7 @@
                             {{ $activityStats['logged_in_visits'] ?? 0 }} <span class="fs-6 text-muted fw-normal">/ {{ $activityStats['guest_visits'] ?? 0 }}</span>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
 

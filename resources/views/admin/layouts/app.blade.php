@@ -547,6 +547,26 @@
             border-color: #CBD5E1;
         }
 
+        /* Clickable KPI Cards across all masters */
+        a.kpi-card, .card.kpi-card {
+            display: block;
+            text-decoration: none !important;
+            color: inherit !important;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        a.kpi-card:hover, .card.kpi-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08) !important;
+            border-color: #CBD5E1 !important;
+            color: inherit !important;
+        }
+
+        a.kpi-card:hover .stat-icon, .card.kpi-card:hover .stat-icon {
+            transform: scale(1.1);
+        }
+
         .stat-icon {
             width: 46px;
             height: 46px;

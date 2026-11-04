@@ -33,7 +33,7 @@
 <!-- 4 Top KPI Metric Cards -->
 <div class="row g-3 mb-4">
     <div class="col-6 col-md-3">
-        <div class="card p-3 border-0 shadow-sm h-100">
+        <a href="{{ route('admin.students') }}" class="card p-3 border-0 shadow-sm h-100 kpi-card" title="View All Students">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <span class="text-muted fw-bold text-uppercase small" style="font-size: 0.7rem;">Total Students</span>
@@ -46,11 +46,11 @@
             <div class="text-muted small mt-2 pt-2 border-top" style="font-size: 0.75rem;">
                 All registered candidates
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="col-6 col-md-3">
-        <div class="card p-3 border-0 shadow-sm h-100">
+        <a href="{{ route('admin.students', ['status' => 'active']) }}" class="card p-3 border-0 shadow-sm h-100 kpi-card" title="Filter Active Students">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <span class="text-muted fw-bold text-uppercase small" style="font-size: 0.7rem;">Active Accounts</span>
@@ -63,11 +63,11 @@
             <div class="text-success small mt-2 pt-2 border-top fw-semibold" style="font-size: 0.75rem;">
                 <i class="bi bi-check2"></i> Can login & apply
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="col-6 col-md-3">
-        <div class="card p-3 border-0 shadow-sm h-100">
+        <a href="{{ route('admin.students', ['has_resume' => '1']) }}" class="card p-3 border-0 shadow-sm h-100 kpi-card" title="Filter Students with Resumes">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <span class="text-muted fw-bold text-uppercase small" style="font-size: 0.7rem;">Resumes Attached</span>
@@ -80,11 +80,11 @@
             <div class="text-muted small mt-2 pt-2 border-top" style="font-size: 0.75rem;">
                 Ready for recruiter review
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="col-6 col-md-3">
-        <div class="card p-3 border-0 shadow-sm h-100">
+        <a href="{{ route('admin.applications') }}" class="card p-3 border-0 shadow-sm h-100 kpi-card" title="View Internship Applications">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <span class="text-muted fw-bold text-uppercase small" style="font-size: 0.7rem;">Active Applicants</span>
@@ -97,7 +97,7 @@
             <div class="text-muted small mt-2 pt-2 border-top" style="font-size: 0.75rem;">
                 Applied to at least 1 job
             </div>
-        </div>
+        </a>
     </div>
 </div>
 

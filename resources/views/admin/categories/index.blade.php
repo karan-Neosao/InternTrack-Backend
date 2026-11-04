@@ -33,7 +33,7 @@
 <!-- 4 Top KPI Metric Cards -->
 <div class="row g-3 mb-4">
     <div class="col-6 col-md-3">
-        <div class="card p-3 border-0 shadow-sm h-100">
+        <a href="{{ route('admin.categories') }}" class="card p-3 border-0 shadow-sm h-100 kpi-card" title="View All Categories">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <span class="text-muted fw-bold text-uppercase small" style="font-size: 0.7rem;">Total Categories</span>
@@ -46,11 +46,11 @@
             <div class="text-muted small mt-2 pt-2 border-top" style="font-size: 0.75rem;">
                 All defined industry tracks
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="col-6 col-md-3">
-        <div class="card p-3 border-0 shadow-sm h-100">
+        <a href="{{ route('admin.categories', ['status' => 'active']) }}" class="card p-3 border-0 shadow-sm h-100 kpi-card" title="Filter Active Categories">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <span class="text-muted fw-bold text-uppercase small" style="font-size: 0.7rem;">Active Tracks</span>
@@ -63,11 +63,11 @@
             <div class="text-success small mt-2 pt-2 border-top fw-semibold" style="font-size: 0.75rem;">
                 <i class="bi bi-check2"></i> Visible on Flutter app
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="col-6 col-md-3">
-        <div class="card p-3 border-0 shadow-sm h-100">
+        <a href="{{ route('admin.internships') }}" class="card p-3 border-0 shadow-sm h-100 kpi-card" title="View Internships">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <span class="text-muted fw-bold text-uppercase small" style="font-size: 0.7rem;">Mapped Openings</span>
@@ -80,11 +80,11 @@
             <div class="text-muted small mt-2 pt-2 border-top" style="font-size: 0.75rem;">
                 Jobs linked to taxonomy
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="col-6 col-md-3">
-        <div class="card p-3 border-0 shadow-sm h-100">
+        <a href="{{ route('admin.internships') }}" class="card p-3 border-0 shadow-sm h-100 kpi-card" title="View Internships Needing Categorization">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <span class="text-muted fw-bold text-uppercase small" style="font-size: 0.7rem;">Unclassified</span>
@@ -97,7 +97,7 @@
             <div class="text-muted small mt-2 pt-2 border-top" style="font-size: 0.75rem;">
                 Jobs needing categorization
             </div>
-        </div>
+        </a>
     </div>
 </div>
 

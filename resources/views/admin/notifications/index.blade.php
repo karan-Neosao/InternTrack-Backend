@@ -38,7 +38,7 @@
 <!-- 4 Top KPI Cards -->
 <div class="row g-3 mb-4">
     <div class="col-6 col-md-3">
-        <div class="card p-3 border-0 shadow-sm h-100">
+        <a href="{{ route('admin.notifications') }}" class="card p-3 border-0 shadow-sm h-100 kpi-card" title="View All Notifications">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <span class="text-muted fw-bold text-uppercase small" style="font-size: 0.7rem;">Total Alerts</span>
@@ -51,11 +51,11 @@
             <div class="text-muted small mt-2 pt-2 border-top" style="font-size: 0.75rem;">
                 Historical notification volume
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="col-6 col-md-3">
-        <div class="card p-3 border-0 shadow-sm h-100">
+        <a href="{{ route('admin.notifications', ['filter' => 'unread']) }}" class="card p-3 border-0 shadow-sm h-100 kpi-card" title="Filter Unread Notifications">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <span class="text-muted fw-bold text-uppercase small" style="font-size: 0.7rem;">Unread Items</span>
@@ -68,11 +68,11 @@
             <div class="text-danger small mt-2 pt-2 border-top fw-semibold" style="font-size: 0.75rem;">
                 <i class="bi bi-dot"></i> Needs administrator attention
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="col-6 col-md-3">
-        <div class="card p-3 border-0 shadow-sm h-100">
+        <a href="{{ route('admin.notifications', ['filter' => 'read']) }}" class="card p-3 border-0 shadow-sm h-100 kpi-card" title="Filter Read Notifications">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <span class="text-muted fw-bold text-uppercase small" style="font-size: 0.7rem;">Read Archive</span>
@@ -85,11 +85,11 @@
             <div class="text-muted small mt-2 pt-2 border-top" style="font-size: 0.75rem;">
                 Reviewed notices
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="col-6 col-md-3">
-        <div class="card p-3 border-0 shadow-sm h-100">
+        <a href="{{ route('admin.settings') }}" class="card p-3 border-0 shadow-sm h-100 kpi-card" title="View System Settings">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <span class="text-muted fw-bold text-uppercase small" style="font-size: 0.7rem;">FCM Mobile Push</span>
@@ -102,7 +102,7 @@
             <div class="text-info small mt-2 pt-2 border-top fw-semibold" style="font-size: 0.75rem;">
                 <i class="bi bi-shield-check"></i> Sanctum token channel
             </div>
-        </div>
+        </a>
     </div>
 </div>
 

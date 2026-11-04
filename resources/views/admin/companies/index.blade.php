@@ -33,7 +33,7 @@
 <!-- 4 Top KPI Metric Cards -->
 <div class="row g-3 mb-4">
     <div class="col-6 col-md-3">
-        <div class="card p-3 border-0 shadow-sm h-100">
+        <a href="{{ route('admin.companies') }}" class="card p-3 border-0 shadow-sm h-100 kpi-card" title="View All Companies">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <span class="text-muted fw-bold text-uppercase small" style="font-size: 0.7rem;">Total Companies</span>
@@ -46,11 +46,11 @@
             <div class="text-muted small mt-2 pt-2 border-top" style="font-size: 0.75rem;">
                 All employer accounts
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="col-6 col-md-3">
-        <div class="card p-3 border-0 shadow-sm h-100">
+        <a href="{{ route('admin.companies', ['verified' => '1']) }}" class="card p-3 border-0 shadow-sm h-100 kpi-card" title="Filter Verified Partners">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <span class="text-muted fw-bold text-uppercase small" style="font-size: 0.7rem;">Verified Partners</span>
@@ -63,11 +63,11 @@
             <div class="text-primary small mt-2 pt-2 border-top fw-semibold" style="font-size: 0.75rem;">
                 <i class="bi bi-shield-check"></i> Verified badges granted
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="col-6 col-md-3">
-        <div class="card p-3 border-0 shadow-sm h-100">
+        <a href="{{ route('admin.companies', ['status' => 'active']) }}" class="card p-3 border-0 shadow-sm h-100 kpi-card" title="Filter Active Employers">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <span class="text-muted fw-bold text-uppercase small" style="font-size: 0.7rem;">Active Employers</span>
@@ -80,11 +80,11 @@
             <div class="text-success small mt-2 pt-2 border-top fw-semibold" style="font-size: 0.75rem;">
                 <i class="bi bi-check2"></i> Can login & post jobs
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="col-6 col-md-3">
-        <div class="card p-3 border-0 shadow-sm h-100">
+        <a href="{{ route('admin.internships') }}" class="card p-3 border-0 shadow-sm h-100 kpi-card" title="View Internships Management">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <span class="text-muted fw-bold text-uppercase small" style="font-size: 0.7rem;">Internships Posted</span>
@@ -97,7 +97,7 @@
             <div class="text-muted small mt-2 pt-2 border-top" style="font-size: 0.75rem;">
                 Openings published across platform
             </div>
-        </div>
+        </a>
     </div>
 </div>
 

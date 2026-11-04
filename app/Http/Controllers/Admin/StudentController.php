@@ -34,6 +34,11 @@ class StudentController extends Controller
             ->when($status !== null && $status !== '', function ($query) use ($status) {
                 $query->where('is_active', $status === 'active' || $status === '1');
             })
+            ->when($request->filled('has_resume'), function ($query) {
+                $query->whereHas('studentProfile', function ($profileQuery) {
+                    $profileQuery->whereNotNull('resume_path')->where('resume_path', '!=', '');
+                });
+            })
             ->latest()
             ->paginate(10)
             ->withQueryString();
