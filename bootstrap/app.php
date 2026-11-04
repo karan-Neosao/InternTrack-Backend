@@ -28,6 +28,10 @@ return Application::configure(basePath: dirname(__DIR__))
             users: '/admin/dashboard',
         );
 
+        $middleware->web(append: [
+            \App\Http\Middleware\TrackActivity::class,
+        ]);
+
         $middleware->alias([
             'admin' => \App\Http\Middleware\EnsureAdmin::class,
         ]);

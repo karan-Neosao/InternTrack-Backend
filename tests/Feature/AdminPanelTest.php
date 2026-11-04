@@ -201,4 +201,25 @@ class AdminPanelTest extends TestCase
         $this->admin->refresh();
         $this->assertEquals('Super Admin Updated', $this->admin->name);
     }
+
+    public function test_visitor_activity_is_tracked_and_visible_in_settings(): void
+    {
+        // 1. Guest visits login page
+        $this->get(route('admin.login'))->assertStatus(200);
+
+        // Verify activity log was recorded
+        $this->assertDatabaseHas('activity_logs', [
+            'user_role' => 'guest',
+        ]);
+
+        // 2. Admin views settings activity tab
+        $viewResponse = $this->actingAs($this->admin)->get(route('admin.settings', ['tab' => 'activity']));
+        $viewResponse->assertStatus(200);
+        $viewResponse->assertSee('Live Visitor & User Activity Log', false);
+
+        // 3. Admin can clear activity logs
+        $deleteResponse = $this->actingAs($this->admin)->delete(route('admin.settings.activity-logs.clear'));
+        $deleteResponse->assertRedirect();
+        $this->assertEquals(0, \App\Models\ActivityLog::count());
+    }
 }

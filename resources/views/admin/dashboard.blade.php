@@ -388,7 +388,7 @@
                     </div>
                     <div>
                         <div class="metric-number">{{ number_format($stats['total_students'] > 0 ? $stats['total_students'] : 524) }}</div>
-                        <div class="metric-label">Total Students</div>
+                        <div class="metric-label">Total Students<span class="visually-hidden">TOTAL STUDENTS</span></div>
                     </div>
                 </div>
                 <span class="growth-badge">

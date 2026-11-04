@@ -703,5 +703,83 @@ class DummyDataSeeder extends Seeder
                 $n
             );
         }
+
+        // Seed Initial Activity & Visitor Logs if empty
+        if (DB::table('activity_logs')->count() === 0) {
+            $initialLogs = [
+                [
+                    'user_id' => $admin->id,
+                    'user_name' => $admin->name,
+                    'user_email' => $admin->email,
+                    'user_role' => 'admin',
+                    'ip_address' => '103.21.124.89',
+                    'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+                    'device' => 'Windows • Chrome',
+                    'url' => url('/admin/dashboard'),
+                    'method' => 'GET',
+                    'action' => 'Viewed Admin Dashboard',
+                    'created_at' => Carbon::now()->subMinutes(12),
+                    'updated_at' => Carbon::now()->subMinutes(12),
+                ],
+                [
+                    'user_id' => null,
+                    'user_name' => 'Recruiter / Visitor',
+                    'user_email' => 'visitor@linkedin',
+                    'user_role' => 'guest',
+                    'ip_address' => '49.36.172.45',
+                    'user_agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15',
+                    'device' => 'macOS • Safari',
+                    'url' => url('/admin/login'),
+                    'method' => 'GET',
+                    'action' => 'Visited Admin Login',
+                    'created_at' => Carbon::now()->subMinutes(35),
+                    'updated_at' => Carbon::now()->subMinutes(35),
+                ],
+                [
+                    'user_id' => $admin->id,
+                    'user_name' => $admin->name,
+                    'user_email' => $admin->email,
+                    'user_role' => 'admin',
+                    'ip_address' => '103.21.124.89',
+                    'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+                    'device' => 'Windows • Chrome',
+                    'url' => url('/admin/reports'),
+                    'method' => 'GET',
+                    'action' => 'Viewed Reports & Analytics',
+                    'created_at' => Carbon::now()->subHours(1)->subMinutes(15),
+                    'updated_at' => Carbon::now()->subHours(1)->subMinutes(15),
+                ],
+                [
+                    'user_id' => null,
+                    'user_name' => 'Guest Visitor',
+                    'user_email' => 'guest@mobile',
+                    'user_role' => 'guest',
+                    'ip_address' => '157.34.18.92',
+                    'user_agent' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/124.0.6367.88 Mobile/15E148 Safari/604.1',
+                    'device' => 'iOS • Chrome',
+                    'url' => url('/'),
+                    'method' => 'GET',
+                    'action' => 'Visited Homepage / Root',
+                    'created_at' => Carbon::now()->subHours(3),
+                    'updated_at' => Carbon::now()->subHours(3),
+                ],
+                [
+                    'user_id' => $admin->id,
+                    'user_name' => $admin->name,
+                    'user_email' => $admin->email,
+                    'user_role' => 'admin',
+                    'ip_address' => '103.21.124.89',
+                    'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+                    'device' => 'Windows • Chrome',
+                    'url' => url('/admin/students'),
+                    'method' => 'GET',
+                    'action' => 'Viewed Students Directory',
+                    'created_at' => Carbon::now()->subHours(5),
+                    'updated_at' => Carbon::now()->subHours(5),
+                ],
+            ];
+
+            DB::table('activity_logs')->insert($initialLogs);
+        }
     }
 }
