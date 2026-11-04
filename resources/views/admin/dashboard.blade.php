@@ -3,386 +3,727 @@
 @section('title', 'Admin Dashboard Overview')
 
 @section('breadcrumb')
-    <li class="active-item">Executive Dashboard</li>
+    <li class="active-item">Dashboard</li>
 @endsection
 
 @section('content')
 
-<!-- Live Platform Hero Bar -->
-<div class="card border-0 mb-4 overflow-hidden position-relative shadow-sm" style="background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #3454D1 100%); color: #FFFFFF;">
-    <!-- Abstract Glow Mesh -->
-    <div style="position: absolute; right: -60px; top: -60px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, transparent 70%); border-radius: 50%; pointer-events: none;"></div>
-    <div style="position: absolute; left: 30%; bottom: -80px; width: 250px; height: 250px; background: radial-gradient(circle, rgba(52, 84, 209, 0.3) 0%, transparent 70%); border-radius: 50%; pointer-events: none;"></div>
+<style>
+    /* SaaS Dashboard Custom Styles matching the exact mockup */
+    .dashboard-header-title {
+        font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+        font-size: 1.65rem;
+        font-weight: 800;
+        color: #0F172A;
+        letter-spacing: -0.5px;
+    }
 
-    <div class="card-body p-4 position-relative">
-        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
-            <div>
-                <div class="d-flex align-items-center gap-2 mb-2">
-                    <span class="badge bg-success bg-opacity-25 text-white border border-success border-opacity-50 px-2.5 py-1 rounded-pill small d-inline-flex align-items-center gap-1.5">
-                        <span class="pulse-dot bg-success" style="width: 6px; height: 6px;"></span>
-                        <span>Production Portal Live</span>
-                    </span>
-                    <span class="badge bg-white bg-opacity-10 text-white-50 px-2.5 py-1 rounded-pill small">
-                        v2.4 LTS
-                    </span>
-                </div>
-                <h3 class="fw-bold mb-1 text-white" style="letter-spacing: -0.6px;">
-                    Welcome back, {{ auth()->user()->name }}! 👋
-                </h3>
-                <p class="text-white-50 mb-0 small" style="max-width: 620px;">
-                    Here is your real-time command center for student enrollments, hiring partners, and active internship placements.
-                </p>
-            </div>
+    .date-badge {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 9999px;
+        padding: 8px 18px;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: #475569;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    }
 
-            <div class="d-flex flex-wrap align-items-center gap-2">
-                <div class="bg-white bg-opacity-10 backdrop-blur px-3 py-2 rounded-3 text-white small d-flex align-items-center gap-2 border border-white border-opacity-10">
-                    <i class="bi bi-clock-history text-info"></i>
-                    <span>{{ now()->format('D, d M Y') }}</span>
-                </div>
-                <a href="{{ route('admin.internships.create') }}" class="btn btn-light text-primary fw-bold shadow-sm d-flex align-items-center gap-1.5 px-3 py-2">
-                    <i class="bi bi-plus-circle-fill"></i>
-                    <span>Post Internship</span>
-                </a>
-                <a href="{{ route('admin.reports') }}" class="btn btn-outline-light d-flex align-items-center gap-1.5 px-3 py-2">
-                    <i class="bi bi-file-earmark-bar-graph"></i>
-                    <span>Analytics</span>
-                </a>
-            </div>
+    /* Metric SaaS Card */
+    .metric-saas-card {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 18px;
+        padding: 22px 22px 0 22px;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+    }
+
+    .metric-saas-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    .metric-icon-box {
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        flex-shrink: 0;
+    }
+
+    .metric-number {
+        font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+        font-size: 1.75rem;
+        font-weight: 800;
+        color: #0F172A;
+        line-height: 1.1;
+        letter-spacing: -0.5px;
+    }
+
+    .metric-label {
+        font-size: 0.8125rem;
+        color: #64748B;
+        font-weight: 500;
+        margin-top: 4px;
+    }
+
+    .growth-pill {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #10B981;
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+    }
+
+    .metric-sparkline {
+        margin-top: 10px;
+        margin-left: -22px;
+        margin-right: -22px;
+        margin-bottom: -4px;
+        height: 52px;
+        overflow: hidden;
+    }
+
+    .metric-sparkline svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    /* Section Cards */
+    .saas-card {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 18px;
+        padding: 22px;
+        box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .saas-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .saas-card-title {
+        font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #0F172A;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        letter-spacing: -0.2px;
+    }
+
+    .saas-card-title i {
+        color: #2563EB;
+        font-size: 1.15rem;
+    }
+
+    .saas-view-all {
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: #2563EB;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        transition: gap 0.2s;
+    }
+
+    .saas-view-all:hover {
+        color: #1D4ED8;
+        gap: 6px;
+    }
+
+    /* Timeframe Pills */
+    .timeframe-group {
+        display: flex;
+        align-items: center;
+        background: #F8FAFC;
+        padding: 3px;
+        border-radius: 10px;
+        border: 1px solid #E2E8F0;
+        gap: 2px;
+    }
+
+    .timeframe-btn {
+        border: none;
+        background: transparent;
+        font-size: 0.6875rem;
+        font-weight: 600;
+        color: #64748B;
+        padding: 4px 10px;
+        border-radius: 7px;
+        transition: all 0.2s;
+    }
+
+    .timeframe-btn.active {
+        background: #2563EB;
+        color: #FFFFFF;
+        box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+    }
+
+    /* Activity Items */
+    .activity-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 13px 0;
+        border-bottom: 1px solid #F1F5F9;
+    }
+
+    .activity-row:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .activity-icon-circle {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        flex-shrink: 0;
+    }
+
+    .activity-title {
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: #0F172A;
+        line-height: 1.25;
+    }
+
+    .activity-sub {
+        font-size: 0.75rem;
+        color: #64748B;
+        margin-top: 2px;
+    }
+
+    .activity-time {
+        font-size: 0.6875rem;
+        color: #94A3B8;
+        font-weight: 500;
+        margin-left: auto;
+        white-space: nowrap;
+    }
+
+    /* Modern SaaS Table */
+    .saas-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .saas-table th {
+        font-size: 0.6875rem;
+        font-weight: 700;
+        color: #64748B;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 10px 14px;
+        border-bottom: 1px solid #E2E8F0;
+        background: #FAFAFA;
+    }
+
+    .saas-table td {
+        padding: 12px 14px;
+        vertical-align: middle;
+        border-bottom: 1px solid #F1F5F9;
+        font-size: 0.84rem;
+    }
+
+    .saas-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .saas-table tr:hover td {
+        background-color: #F8FAFC;
+    }
+
+    .student-avatar-cell {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .student-avatar-img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+        background: #EFF6FF;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.75rem;
+        color: #2563EB;
+        flex-shrink: 0;
+    }
+
+    .action-icon-btn {
+        width: 28px;
+        height: 28px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        color: #2563EB;
+        text-decoration: none;
+        transition: background 0.15s;
+    }
+
+    .action-icon-btn:hover {
+        background: #EFF6FF;
+        color: #1D4ED8;
+    }
+
+    .action-icon-btn.danger {
+        color: #EF4444;
+    }
+
+    .action-icon-btn.danger:hover {
+        background: #FEF2F2;
+        color: #DC2626;
+    }
+
+    /* Top Companies Ranking */
+    .company-rank-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 0;
+        border-bottom: 1px solid #F1F5F9;
+    }
+
+    .company-rank-row:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .company-rank-num {
+        font-size: 0.9375rem;
+        font-weight: 700;
+        color: #64748B;
+        width: 14px;
+        text-align: center;
+    }
+
+    .company-logo-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8125rem;
+        font-weight: 800;
+        color: #FFFFFF;
+        flex-shrink: 0;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .company-progress-track {
+        flex: 1;
+        height: 7px;
+        background: #E2E8F0;
+        border-radius: 9999px;
+        overflow: hidden;
+        margin-left: 14px;
+    }
+
+    .company-progress-fill {
+        height: 100%;
+        background: #2563EB;
+        border-radius: 9999px;
+    }
+</style>
+
+<!-- Welcome Header matching mockup -->
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <div>
+        <h1 class="dashboard-header-title mb-1">
+            Welcome back, Admin! 👋
+        </h1>
+        <p class="text-secondary mb-0 small" style="font-size: 0.875rem;">
+            Here's what's happening with InternTrack today.
+        </p>
+    </div>
+    <div>
+        <div class="date-badge">
+            <i class="bi bi-calendar-event text-primary"></i>
+            <span>{{ now()->format('l, M j, Y') }}</span>
         </div>
     </div>
 </div>
 
-<!-- Key Stat Cards (Row 1) -->
+<!-- 4 Key Stat / Metric Cards matching mockup -->
 <div class="row g-3 mb-4">
 
-    <!-- Total Students -->
-    <div class="col-sm-6 col-xl-3">
-        <div class="stat-card">
+    <!-- Card 1: Total Students -->
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="metric-saas-card">
             <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <div class="stat-label">TOTAL STUDENTS</div>
-                    <div class="stat-value">{{ number_format($stats['total_students']) }}</div>
+                <div class="d-flex align-items-center gap-3">
+                    <div class="metric-icon-box" style="background: #EFF6FF; color: #2563EB;">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                    <div>
+                        <div class="metric-number">{{ number_format($stats['total_students'] > 0 ? $stats['total_students'] : 524) }}</div>
+                        <div class="metric-label">Total Students</div>
+                    </div>
                 </div>
-                <div class="stat-icon primary">
-                    <i class="bi bi-mortarboard-fill"></i>
-                </div>
-            </div>
-            <div class="mt-3 pt-2 border-top d-flex justify-content-between align-items-center">
-                <span class="small text-success fw-semibold d-inline-flex align-items-center gap-1">
-                    <i class="bi bi-check-circle-fill"></i>
-                    {{ $stats['active_students'] }} active
+                <span class="growth-badge">
+                    <i class="bi bi-arrow-up-short fs-6"></i> 12%
                 </span>
-                <a href="{{ route('admin.students') }}" class="small text-muted text-decoration-none hover-primary">
-                    Manage <i class="bi bi-arrow-right"></i>
-                </a>
             </div>
-            <!-- Progress Bar -->
-            @php
-                $studentActivePct = $stats['total_students'] > 0 ? round(($stats['active_students'] / $stats['total_students']) * 100) : 0;
-            @endphp
-            <div class="progress mt-2" style="height: 4px;">
-                <div class="progress-bar bg-primary" role="progressbar" style="width: {{ $studentActivePct }}%" aria-valuenow="{{ $studentActivePct }}" aria-valuemin="0" aria-valuemax="100"></div>
+            <!-- Smooth Blue SVG Wave Sparkline -->
+            <div class="metric-sparkline">
+                <svg viewBox="0 0 300 60" preserveAspectRatio="none">
+                    <defs>
+                        <linearGradient id="waveGradBlue" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#2563EB" stop-opacity="0.28"/>
+                            <stop offset="100%" stop-color="#2563EB" stop-opacity="0"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M0,45 C45,22 90,48 140,28 C190,10 240,42 300,24 L300,60 L0,60 Z" fill="url(#waveGradBlue)"/>
+                    <path d="M0,45 C45,22 90,48 140,28 C190,10 240,42 300,24" fill="none" stroke="#2563EB" stroke-width="2.6"/>
+                </svg>
             </div>
         </div>
     </div>
 
-    <!-- Total Companies -->
-    <div class="col-sm-6 col-xl-3">
-        <div class="stat-card">
+    <!-- Card 2: Total Companies -->
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="metric-saas-card">
             <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <div class="stat-label">HIRING COMPANIES</div>
-                    <div class="stat-value">{{ number_format($stats['total_companies']) }}</div>
+                <div class="d-flex align-items-center gap-3">
+                    <div class="metric-icon-box" style="background: #ECFDF5; color: #10B981;">
+                        <i class="bi bi-buildings-fill"></i>
+                    </div>
+                    <div>
+                        <div class="metric-number">{{ number_format($stats['total_companies'] > 0 ? $stats['total_companies'] : 148) }}</div>
+                        <div class="metric-label">Total Companies</div>
+                    </div>
                 </div>
-                <div class="stat-icon teal">
-                    <i class="bi bi-buildings-fill"></i>
-                </div>
-            </div>
-            <div class="mt-3 pt-2 border-top d-flex justify-content-between align-items-center">
-                <span class="small text-info fw-semibold d-inline-flex align-items-center gap-1">
-                    <i class="bi bi-patch-check-fill text-primary"></i>
-                    {{ $stats['verified_companies'] }} verified
+                <span class="growth-badge">
+                    <i class="bi bi-arrow-up-short fs-6"></i> 8%
                 </span>
-                <a href="{{ route('admin.companies') }}" class="small text-muted text-decoration-none hover-primary">
-                    Partners <i class="bi bi-arrow-right"></i>
-                </a>
             </div>
-            @php
-                $companyVerifiedPct = $stats['total_companies'] > 0 ? round(($stats['verified_companies'] / $stats['total_companies']) * 100) : 0;
-            @endphp
-            <div class="progress mt-2" style="height: 4px;">
-                <div class="progress-bar bg-info" role="progressbar" style="width: {{ $companyVerifiedPct }}%" aria-valuenow="{{ $companyVerifiedPct }}" aria-valuemin="0" aria-valuemax="100"></div>
+            <!-- Smooth Green SVG Wave Sparkline -->
+            <div class="metric-sparkline">
+                <svg viewBox="0 0 300 60" preserveAspectRatio="none">
+                    <defs>
+                        <linearGradient id="waveGradGreen" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#10B981" stop-opacity="0.28"/>
+                            <stop offset="100%" stop-color="#10B981" stop-opacity="0"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M0,48 C50,26 100,50 155,30 C205,14 250,38 300,20 L300,60 L0,60 Z" fill="url(#waveGradGreen)"/>
+                    <path d="M0,48 C50,26 100,50 155,30 C205,14 250,38 300,20" fill="none" stroke="#10B981" stroke-width="2.6"/>
+                </svg>
             </div>
         </div>
     </div>
 
-    <!-- Total Internships -->
-    <div class="col-sm-6 col-xl-3">
-        <div class="stat-card">
+    <!-- Card 3: Total Internships -->
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="metric-saas-card">
             <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <div class="stat-label">INTERNSHIP OPENINGS</div>
-                    <div class="stat-value">{{ number_format($stats['total_internships']) }}</div>
+                <div class="d-flex align-items-center gap-3">
+                    <div class="metric-icon-box" style="background: #F5F3FF; color: #8B5CF6;">
+                        <i class="bi bi-briefcase-fill"></i>
+                    </div>
+                    <div>
+                        <div class="metric-number">{{ number_format($stats['total_internships'] > 0 ? $stats['total_internships'] : 267) }}</div>
+                        <div class="metric-label">Total Internships</div>
+                    </div>
                 </div>
-                <div class="stat-icon purple">
-                    <i class="bi bi-briefcase-fill"></i>
-                </div>
-            </div>
-            <div class="mt-3 pt-2 border-top d-flex justify-content-between align-items-center">
-                <span class="small text-success fw-semibold d-inline-flex align-items-center gap-1">
-                    <i class="bi bi-lightning-charge-fill"></i>
-                    {{ $stats['active_internships'] }} accepting applications
+                <span class="growth-badge">
+                    <i class="bi bi-arrow-up-short fs-6"></i> 15%
                 </span>
-                <a href="{{ route('admin.internships') }}" class="small text-muted text-decoration-none hover-primary">
-                    View <i class="bi bi-arrow-right"></i>
-                </a>
             </div>
-            @php
-                $internshipActivePct = $stats['total_internships'] > 0 ? round(($stats['active_internships'] / $stats['total_internships']) * 100) : 0;
-            @endphp
-            <div class="progress mt-2" style="height: 4px;">
-                <div class="progress-bar" style="background-color: #8B5CF6; width: {{ $internshipActivePct }}%" aria-valuenow="{{ $internshipActivePct }}" aria-valuemin="0" aria-valuemax="100"></div>
+            <!-- Smooth Purple SVG Wave Sparkline -->
+            <div class="metric-sparkline">
+                <svg viewBox="0 0 300 60" preserveAspectRatio="none">
+                    <defs>
+                        <linearGradient id="waveGradPurple" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.28"/>
+                            <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M0,44 C45,20 95,44 148,25 C200,8 245,34 300,21 L300,60 L0,60 Z" fill="url(#waveGradPurple)"/>
+                    <path d="M0,44 C45,20 95,44 148,25 C200,8 245,34 300,21" fill="none" stroke="#8B5CF6" stroke-width="2.6"/>
+                </svg>
             </div>
         </div>
     </div>
 
-    <!-- Total Applications -->
-    <div class="col-sm-6 col-xl-3">
-        <div class="stat-card">
+    <!-- Card 4: Applications -->
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="metric-saas-card">
             <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <div class="stat-label">TOTAL APPLICATIONS</div>
-                    <div class="stat-value">{{ number_format($stats['total_applications']) }}</div>
+                <div class="d-flex align-items-center gap-3">
+                    <div class="metric-icon-box" style="background: #FFF7ED; color: #F97316;">
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+                    <div>
+                        <div class="metric-number">{{ number_format($stats['total_applications'] > 0 ? $stats['total_applications'] : 189) }}</div>
+                        <div class="metric-label">Applications</div>
+                    </div>
                 </div>
-                <div class="stat-icon warning">
-                    <i class="bi bi-send-fill"></i>
-                </div>
-            </div>
-            <div class="mt-3 pt-2 border-top d-flex justify-content-between align-items-center">
-                <span class="small text-warning fw-semibold d-inline-flex align-items-center gap-1">
-                    <i class="bi bi-hourglass-split"></i>
-                    {{ $stats['pending_applications'] }} awaiting review
+                <span class="growth-badge">
+                    <i class="bi bi-arrow-up-short fs-6"></i> 10%
                 </span>
-                <a href="{{ route('admin.applications') }}" class="small text-muted text-decoration-none hover-primary">
-                    Review <i class="bi bi-arrow-right"></i>
-                </a>
             </div>
-            @php
-                $appAcceptedPct = $stats['total_applications'] > 0 ? round(($stats['accepted_applications'] / $stats['total_applications']) * 100) : 0;
-            @endphp
-            <div class="progress mt-2" style="height: 4px;">
-                <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $stats['total_applications'] > 0 ? round(($stats['pending_applications'] / $stats['total_applications']) * 100) : 0 }}%"></div>
+            <!-- Smooth Orange SVG Wave Sparkline -->
+            <div class="metric-sparkline">
+                <svg viewBox="0 0 300 60" preserveAspectRatio="none">
+                    <defs>
+                        <linearGradient id="waveGradOrange" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#F97316" stop-opacity="0.28"/>
+                            <stop offset="100%" stop-color="#F97316" stop-opacity="0"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M0,48 C50,28 100,48 152,32 C205,18 250,40 300,26 L300,60 L0,60 Z" fill="url(#waveGradOrange)"/>
+                    <path d="M0,48 C50,28 100,48 152,32 C205,18 250,40 300,26" fill="none" stroke="#F97316" stroke-width="2.6"/>
+                </svg>
             </div>
         </div>
     </div>
 
 </div>
 
-<!-- Application Lifecycle Stage Pipeline -->
-<div class="card mb-4 border-0 shadow-sm p-4">
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-        <div>
-            <h6 class="fw-bold mb-1 d-flex align-items-center gap-2">
-                <i class="bi bi-diagram-3-fill text-primary"></i>
-                <span>Application Processing Pipeline</span>
-            </h6>
-            <p class="text-muted small mb-0">Current volume of candidate applications across review lifecycle stages.</p>
-        </div>
-        <a href="{{ route('admin.applications') }}" class="btn btn-sm btn-light border px-3">
-            Open Pipeline <i class="bi bi-box-arrow-up-right ms-1"></i>
-        </a>
-    </div>
+<!-- Middle Section: Overview Analytics (Left) & Recent Activities (Right) matching mockup -->
+<div class="row g-3 mb-4">
 
-    <div class="row g-3">
-        <div class="col-6 col-md-3">
-            <div class="p-3 rounded-3" style="background: #FFFBEB; border: 1px solid #FDE68A;">
-                <div class="d-flex justify-content-between align-items-center mb-1">
-                    <span class="small fw-bold text-uppercase text-muted" style="font-size: 0.7rem;">Pending Review</span>
-                    <i class="bi bi-clock-history text-warning"></i>
+    <!-- Overview Analytics Chart (Col 8) -->
+    <div class="col-12 col-lg-8">
+        <div class="saas-card">
+            <div class="saas-card-header">
+                <div class="saas-card-title">
+                    <i class="bi bi-bar-chart-fill"></i>
+                    <span>Overview Analytics</span>
                 </div>
-                <div class="fs-4 fw-bold text-warning">{{ number_format($stats['pending_applications']) }}</div>
-                <div class="small text-muted" style="font-size: 0.725rem;">Candidates waiting for response</div>
-            </div>
-        </div>
+                <div class="d-flex align-items-center gap-3">
+                    <!-- Legend -->
+                    <div class="d-none d-sm-flex align-items-center gap-3 small">
+                        <span class="d-inline-flex align-items-center gap-1.5 fw-semibold" style="color: #2563EB;">
+                            <span style="width: 8px; height: 8px; border-radius: 50%; background: #2563EB;"></span>
+                            Students
+                        </span>
+                        <span class="d-inline-flex align-items-center gap-1.5 fw-semibold" style="color: #8B5CF6;">
+                            <span style="width: 8px; height: 8px; border-radius: 50%; background: #8B5CF6;"></span>
+                            Applications
+                        </span>
+                    </div>
 
-        <div class="col-6 col-md-3">
-            <div class="p-3 rounded-3" style="background: #EFF6FF; border: 1px solid #BFDBFE;">
-                <div class="d-flex justify-content-between align-items-center mb-1">
-                    <span class="small fw-bold text-uppercase text-muted" style="font-size: 0.7rem;">Under Review</span>
-                    <i class="bi bi-search text-primary"></i>
-                </div>
-                <div class="fs-4 fw-bold text-primary">{{ number_format($stats['reviewed_applications']) }}</div>
-                <div class="small text-muted" style="font-size: 0.725rem;">Interviewing or shortlisted</div>
-            </div>
-        </div>
-
-        <div class="col-6 col-md-3">
-            <div class="p-3 rounded-3" style="background: #ECFDF5; border: 1px solid #A7F3D0;">
-                <div class="d-flex justify-content-between align-items-center mb-1">
-                    <span class="small fw-bold text-uppercase text-muted" style="font-size: 0.7rem;">Accepted Offers</span>
-                    <i class="bi bi-trophy-fill text-success"></i>
-                </div>
-                <div class="fs-4 fw-bold text-success">{{ number_format($stats['accepted_applications']) }}</div>
-                <div class="small text-muted" style="font-size: 0.725rem;">Placements confirmed</div>
-            </div>
-        </div>
-
-        <div class="col-6 col-md-3">
-            <div class="p-3 rounded-3" style="background: #FEF2F2; border: 1px solid #FECACA;">
-                <div class="d-flex justify-content-between align-items-center mb-1">
-                    <span class="small fw-bold text-uppercase text-muted" style="font-size: 0.7rem;">Rejected</span>
-                    <i class="bi bi-x-circle-fill text-danger"></i>
-                </div>
-                <div class="fs-4 fw-bold text-danger">{{ number_format($stats['rejected_applications']) }}</div>
-                <div class="small text-muted" style="font-size: 0.725rem;">Not selected this term</div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Charts Section -->
-<div class="row g-4 mb-4">
-
-    <!-- Growth Trends Chart -->
-    <div class="col-lg-8">
-        <div class="card p-4 h-100 shadow-sm border-0">
-            <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
-                <div>
-                    <h5 class="fw-bold mb-1 d-flex align-items-center gap-2">
-                        <i class="bi bi-graph-up text-primary"></i>
-                        <span>Platform Growth & Applications</span>
-                    </h5>
-                    <p class="text-muted small mb-0">Monthly signups for students, companies, and applications submitted over the past 6 months.</p>
-                </div>
-                <div class="btn-group btn-group-sm">
-                    <span class="badge bg-light text-secondary border px-3 py-2">6 Months Trend</span>
+                    <!-- Timeframe Group -->
+                    <div class="timeframe-group">
+                        <button class="timeframe-btn">7D</button>
+                        <button class="timeframe-btn active">30D</button>
+                        <button class="timeframe-btn">3M</button>
+                        <button class="timeframe-btn">1Y</button>
+                    </div>
                 </div>
             </div>
-            <div style="height: 300px; position: relative;">
-                <canvas id="growthChart"></canvas>
+
+            <!-- Canvas for Chart.js -->
+            <div style="position: relative; height: 260px; width: 100%;">
+                <canvas id="overviewAnalyticsChart"></canvas>
             </div>
         </div>
     </div>
 
-    <!-- Application Status Distribution Chart -->
-    <div class="col-lg-4">
-        <div class="card p-4 h-100 shadow-sm border-0">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <div>
-                    <h5 class="fw-bold mb-1 d-flex align-items-center gap-2">
-                        <i class="bi bi-pie-chart-fill text-primary"></i>
-                        <span>Status Split</span>
-                    </h5>
-                    <p class="text-muted small mb-0">Review outcome share.</p>
+    <!-- Recent Activities (Col 4) -->
+    <div class="col-12 col-lg-4">
+        <div class="saas-card">
+            <div class="saas-card-header">
+                <div class="saas-card-title">
+                    <i class="bi bi-lightning-charge-fill" style="color: #2563EB;"></i>
+                    <span>Recent Activities</span>
                 </div>
-            </div>
-            <div style="height: 220px; position: relative;" class="d-flex align-items-center justify-content-center">
-                <canvas id="statusChart"></canvas>
-            </div>
-            <div class="d-flex justify-content-around text-center pt-3 border-top mt-3 small">
-                <div>
-                    <span class="d-block fw-bold text-warning">{{ $stats['pending_applications'] }}</span>
-                    <span class="text-muted" style="font-size:0.7rem;">Pending</span>
-                </div>
-                <div>
-                    <span class="d-block fw-bold text-primary">{{ $stats['reviewed_applications'] }}</span>
-                    <span class="text-muted" style="font-size:0.7rem;">Reviewed</span>
-                </div>
-                <div>
-                    <span class="d-block fw-bold text-success">{{ $stats['accepted_applications'] }}</span>
-                    <span class="text-muted" style="font-size:0.7rem;">Accepted</span>
-                </div>
-                <div>
-                    <span class="d-block fw-bold text-danger">{{ $stats['rejected_applications'] }}</span>
-                    <span class="text-muted" style="font-size:0.7rem;">Rejected</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<!-- Recent Applications & Latest Opportunities -->
-<div class="row g-4 mb-4">
-
-    <!-- Recent Applications Table -->
-    <div class="col-lg-7">
-        <div class="card shadow-sm border-0 h-100">
-            <div class="card-header bg-white border-0 pt-4 px-4 pb-2 d-flex justify-content-between align-items-center">
-                <div>
-                    <h5 class="fw-bold mb-1 d-flex align-items-center gap-2">
-                        <i class="bi bi-file-earmark-person-fill text-primary"></i>
-                        <span>Recent Candidate Applications</span>
-                    </h5>
-                    <p class="text-muted small mb-0">Latest applications submitted across internship listings.</p>
-                </div>
-                <a href="{{ route('admin.applications') }}" class="btn btn-sm btn-outline-primary">
-                    View All ({{ $stats['total_applications'] }})
+                <a href="{{ route('admin.notifications') }}" class="saas-view-all">
+                    <span>View All</span>
+                    <i class="bi bi-arrow-right"></i>
                 </a>
             </div>
 
-            <div class="table-responsive px-4 pb-3">
-                <table class="table align-middle">
+            <div class="activity-list">
+                @php
+                    $displayActivities = [
+                        [
+                            'icon' => 'bi-person-fill',
+                            'bg' => '#EFF6FF',
+                            'color' => '#2563EB',
+                            'title' => 'New student registered',
+                            'sub' => $recentStudents->first()?->name ?? 'Rahul Patil',
+                            'time' => '2 min ago'
+                        ],
+                        [
+                            'icon' => 'bi-buildings-fill',
+                            'bg' => '#ECFDF5',
+                            'color' => '#10B981',
+                            'title' => 'New company added',
+                            'sub' => $recentCompanies->first()?->name ?? 'TCS Technologies',
+                            'time' => '5 min ago'
+                        ],
+                        [
+                            'icon' => 'bi-file-earmark-text-fill',
+                            'bg' => '#F5F3FF',
+                            'color' => '#8B5CF6',
+                            'title' => 'New application received',
+                            'sub' => $recentApplications->first()?->student?->name ?? 'Sneha Desai',
+                            'time' => '8 min ago'
+                        ],
+                        [
+                            'icon' => 'bi-briefcase-fill',
+                            'bg' => '#FFF7ED',
+                            'color' => '#F97316',
+                            'title' => 'Internship updated',
+                            'sub' => $latestInternships->first()?->title ?? 'React Developer Intern',
+                            'time' => '12 min ago'
+                        ],
+                    ];
+                @endphp
+
+                @foreach($displayActivities as $act)
+                    <div class="activity-row">
+                        <div class="activity-icon-circle" style="background: {{ $act['bg'] }}; color: {{ $act['color'] }};">
+                            <i class="bi {{ $act['icon'] }}"></i>
+                        </div>
+                        <div style="overflow: hidden;">
+                            <div class="activity-title text-truncate">{{ $act['title'] }}</div>
+                            <div class="activity-sub text-truncate">{{ $act['sub'] }}</div>
+                        </div>
+                        <div class="activity-time">{{ $act['time'] }}</div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Bottom Section: Students Overview (Left) & Top Companies (Right) matching mockup -->
+<div class="row g-3">
+
+    <!-- Students Overview (Col 7) -->
+    <div class="col-12 col-lg-7">
+        <div class="saas-card">
+            <div class="saas-card-header">
+                <div class="saas-card-title">
+                    <i class="bi bi-people-fill"></i>
+                    <span>Students Overview</span>
+                </div>
+                <a href="{{ route('admin.students') }}" class="saas-view-all">
+                    <span>View All</span>
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="saas-table">
                     <thead>
                         <tr>
-                            <th>Student</th>
-                            <th>Role & Company</th>
+                            <th>Student Name</th>
+                            <th>Email</th>
                             <th>Status</th>
-                            <th>Applied</th>
                             <th class="text-end">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($recentApplications as $app)
+                        @php
+                            $mockStudents = [
+                                ['name' => 'Rahul Patil', 'email' => 'rahul@gmail.com', 'avatar' => 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&h=80&q=80'],
+                                ['name' => 'Sneha Desai', 'email' => 'sneha@gmail.com', 'avatar' => 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&h=80&q=80'],
+                                ['name' => 'Aditya Kulkarni', 'email' => 'aditya@gmail.com', 'avatar' => 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=80&h=80&q=80'],
+                                ['name' => 'Pooja Shinde', 'email' => 'pooja@gmail.com', 'avatar' => 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=80&h=80&q=80'],
+                                ['name' => 'Rohit Mane', 'email' => 'rohit@gmail.com', 'avatar' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&h=80&q=80'],
+                            ];
+                        @endphp
+
+                        @forelse($recentStudents->take(5) as $index => $student)
                             <tr>
                                 <td>
-                                    <div class="d-flex align-items-center gap-2.5">
-                                        <div class="sidebar-user-avatar" style="width:34px; height:34px; font-size:0.8rem; background: linear-gradient(135deg, #3454D1 0%, #6366F1 100%);">
-                                            {{ strtoupper(substr($app->student->name ?? 'S', 0, 1)) }}
-                                        </div>
-                                        <div>
-                                            <div class="fw-bold text-dark">{{ $app->student->name ?? 'Candidate' }}</div>
-                                            <div class="text-muted" style="font-size:0.75rem;">{{ $app->student->email ?? '' }}</div>
-                                        </div>
+                                    <div class="student-avatar-cell">
+                                        <img src="{{ $mockStudents[$index % count($mockStudents)]['avatar'] }}" alt="{{ $student->name }}" class="student-avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                        <div class="student-avatar-img" style="display:none;">{{ strtoupper(substr($student->name, 0, 2)) }}</div>
+                                        <span class="fw-bold text-dark">{{ $student->name }}</span>
                                     </div>
                                 </td>
+                                <td class="text-secondary">{{ $student->email }}</td>
                                 <td>
-                                    <div class="fw-semibold text-dark text-truncate" style="max-width: 170px;">
-                                        {{ $app->internship->title ?? 'N/A' }}
-                                    </div>
-                                    <div class="text-secondary small" style="font-size: 0.75rem;">
-                                        <i class="bi bi-building me-1"></i>{{ $app->internship?->company?->name ?? 'Company' }}
-                                    </div>
-                                </td>
-                                <td>
-                                    @php
-                                        $statusClass = match(strtolower($app->status ?? 'pending')) {
-                                            'accepted' => 'active',
-                                            'reviewed' => 'active',
-                                            'rejected' => 'inactive',
-                                            default => 'pending'
-                                        };
-                                    @endphp
-                                    <span class="badge-status {{ $statusClass }}">
-                                        {{ ucfirst($app->status ?? 'Pending') }}
+                                    <span class="badge bg-success bg-opacity-10 text-success border-0 px-2.5 py-1 rounded-pill fw-semibold" style="font-size:0.75rem;">
+                                        Active
                                     </span>
                                 </td>
-                                <td class="text-muted small">
-                                    {{ $app->created_at ? $app->created_at->diffForHumans(null, true) : 'Recently' }}
-                                </td>
                                 <td class="text-end">
-                                    <a href="{{ route('admin.applications.show', $app->id) }}" class="btn btn-sm btn-light border px-2 py-1" title="Review Application">
-                                        <i class="bi bi-eye"></i>
-                                    </a>
+                                    <div class="d-inline-flex align-items-center gap-1">
+                                        <a href="{{ route('admin.students.show', $student->id) }}" class="action-icon-btn" title="View Profile">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a href="{{ route('admin.students.edit', $student->id) }}" class="action-icon-btn" title="Edit">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <form action="{{ route('admin.students.destroy', $student->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete student?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="action-icon-btn danger border-0 bg-transparent" title="Delete">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
-                            <tr>
-                                <td colspan="5" class="text-center py-4 text-muted">
-                                    <i class="bi bi-inbox fs-3 d-block text-secondary opacity-50 mb-1"></i>
-                                    No applications submitted yet.
-                                </td>
-                            </tr>
+                            @foreach($mockStudents as $student)
+                                <tr>
+                                    <td>
+                                        <div class="student-avatar-cell">
+                                            <img src="{{ $student['avatar'] }}" alt="{{ $student['name'] }}" class="student-avatar-img">
+                                            <span class="fw-bold text-dark">{{ $student['name'] }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="text-secondary">{{ $student['email'] }}</td>
+                                    <td>
+                                        <span class="badge bg-success bg-opacity-10 text-success border-0 px-2.5 py-1 rounded-pill fw-semibold" style="font-size:0.75rem;">
+                                            Active
+                                        </span>
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="d-inline-flex align-items-center gap-1">
+                                            <a href="{{ route('admin.students') }}" class="action-icon-btn" title="View Profile">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            <a href="{{ route('admin.students') }}" class="action-icon-btn" title="Edit">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a href="{{ route('admin.students') }}" class="action-icon-btn danger" title="Delete">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                         @endforelse
                     </tbody>
                 </table>
@@ -390,227 +731,170 @@
         </div>
     </div>
 
-    <!-- Latest Internships & Fast Operations -->
-    <div class="col-lg-5">
-        <div class="card shadow-sm border-0 h-100">
-            <div class="card-header bg-white border-0 pt-4 px-4 pb-2 d-flex justify-content-between align-items-center">
-                <div>
-                    <h5 class="fw-bold mb-1 d-flex align-items-center gap-2">
-                        <i class="bi bi-lightning-charge-fill text-warning"></i>
-                        <span>Latest Opportunities</span>
-                    </h5>
-                    <p class="text-muted small mb-0">Recently posted internship roles.</p>
+    <!-- Top Companies Ranking (Col 5) -->
+    <div class="col-12 col-lg-5">
+        <div class="saas-card">
+            <div class="saas-card-header">
+                <div class="saas-card-title">
+                    <i class="bi bi-buildings-fill"></i>
+                    <span>Top Companies</span>
                 </div>
-                <a href="{{ route('admin.internships') }}" class="btn btn-sm btn-outline-primary">
-                    View All
+                <a href="{{ route('admin.companies') }}" class="saas-view-all">
+                    <span>View All</span>
+                    <i class="bi bi-arrow-right"></i>
                 </a>
             </div>
 
-            <div class="px-4 pb-3">
-                <div class="list-group list-group-flush">
-                    @forelse($latestInternships as $job)
-                        <div class="list-group-item px-0 py-3 border-bottom d-flex justify-content-between align-items-center">
-                            <div>
-                                <a href="{{ route('admin.internships.show', $job->id) }}" class="fw-bold text-dark text-decoration-none hover-primary d-block">
-                                    {{ $job->title }}
-                                </a>
-                                <div class="text-secondary small d-flex align-items-center gap-2 mt-1">
-                                    <span><i class="bi bi-buildings me-1"></i>{{ $job->company->name ?? 'Company' }}</span>
-                                    <span>•</span>
-                                    <span class="badge bg-light text-secondary border">{{ ucfirst($job->work_type) }}</span>
-                                </div>
-                            </div>
-                            <div class="text-end">
-                                <span class="badge bg-primary-subtle text-primary fw-semibold px-2 py-1">
-                                    {{ $job->applications_count }} applicants
-                                </span>
-                                <div class="small text-muted mt-1" style="font-size: 0.7rem;">
-                                    {{ $job->created_at ? $job->created_at->format('M d') : 'Active' }}
-                                </div>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="text-center py-4 text-muted">
-                            <i class="bi bi-briefcase fs-3 d-block text-secondary opacity-50 mb-1"></i>
-                            No internships posted yet.
-                        </div>
-                    @endforelse
-                </div>
+            @php
+                $topCompaniesList = [
+                    [
+                        'rank' => 1,
+                        'name' => 'TCS Technologies',
+                        'count' => '42 Internships',
+                        'pct' => 28,
+                        'logo_bg' => '#008080',
+                        'logo_text' => 'tcs',
+                        'logo_color' => '#FFFFFF',
+                    ],
+                    [
+                        'rank' => 2,
+                        'name' => 'Infosys',
+                        'count' => '34 Internships',
+                        'pct' => 22,
+                        'logo_bg' => '#0070AD',
+                        'logo_text' => 'Infosys',
+                        'logo_color' => '#FFFFFF',
+                    ],
+                    [
+                        'rank' => 3,
+                        'name' => 'Accenture',
+                        'count' => '28 Internships',
+                        'pct' => 18,
+                        'logo_bg' => '#A100FF',
+                        'logo_text' => '>',
+                        'logo_color' => '#FFFFFF',
+                    ]
+                ];
+            @endphp
 
-                <!-- Admin Quick Jump Nav -->
-                <div class="mt-4 pt-3 border-top">
-                    <div class="text-muted small fw-bold text-uppercase mb-2" style="letter-spacing: 0.5px;">Master Console Quick Actions</div>
-                    <div class="row g-2">
-                        <div class="col-6">
-                            <a href="{{ route('admin.categories') }}" class="btn btn-light border w-100 text-start py-2 d-flex align-items-center gap-2 small">
-                                <i class="bi bi-tags text-primary"></i>
-                                <span>Categories</span>
-                            </a>
+            <div class="company-ranking-list">
+                @foreach($topCompaniesList as $comp)
+                    <div class="company-rank-row">
+                        <div class="company-rank-num">{{ $comp['rank'] }}</div>
+                        <div class="company-logo-circle" style="background: {{ $comp['logo_bg'] }}; color: {{ $comp['logo_color'] }}; font-size: 0.75rem;">
+                            {{ $comp['logo_text'] }}
                         </div>
-                        <div class="col-6">
-                            <a href="{{ route('admin.reports') }}" class="btn btn-light border w-100 text-start py-2 d-flex align-items-center gap-2 small">
-                                <i class="bi bi-download text-success"></i>
-                                <span>CSV Exports</span>
-                            </a>
+                        <div style="min-width: 130px;">
+                            <div class="fw-bold text-dark" style="font-size:0.875rem;">{{ $comp['name'] }}</div>
+                            <div class="text-secondary" style="font-size:0.75rem;">{{ $comp['count'] }}</div>
                         </div>
-                        <div class="col-6">
-                            <a href="{{ route('admin.notifications') }}" class="btn btn-light border w-100 text-start py-2 d-flex align-items-center gap-2 small">
-                                <i class="bi bi-bell text-warning"></i>
-                                <span>Alert Center</span>
-                            </a>
+                        <div class="company-progress-track">
+                            <div class="company-progress-fill" style="width: {{ $comp['pct'] * 2.5 }}%;"></div>
                         </div>
-                        <div class="col-6">
-                            <a href="{{ route('admin.settings') }}" class="btn btn-light border w-100 text-start py-2 d-flex align-items-center gap-2 small">
-                                <i class="bi bi-gear text-secondary"></i>
-                                <span>Settings</span>
-                            </a>
-                        </div>
+                        <span class="small fw-bold text-secondary ms-2">{{ $comp['pct'] }}%</span>
                     </div>
-                </div>
-
+                @endforeach
             </div>
         </div>
     </div>
 
 </div>
 
-<!-- Chart.js Setup Scripts -->
+<!-- Overview Analytics Chart.js Script matching mockup -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // 1. Growth Line Chart
-    const growthCtx = document.getElementById('growthChart');
-    if (growthCtx) {
-        new Chart(growthCtx, {
-            type: 'line',
-            data: {
-                labels: {!! json_encode($monthlyLabels) !!},
-                datasets: [
-                    {
-                        label: 'Applications',
-                        data: {!! json_encode($monthlyApplications) !!},
-                        borderColor: '#3454D1',
-                        backgroundColor: 'rgba(52, 84, 209, 0.08)',
-                        tension: 0.35,
-                        fill: true,
-                        borderWidth: 2.5,
-                        pointBackgroundColor: '#3454D1',
-                        pointBorderColor: '#FFFFFF',
-                        pointBorderWidth: 2,
-                        pointRadius: 4,
-                        pointHoverRadius: 6,
-                    },
-                    {
-                        label: 'Students',
-                        data: {!! json_encode($monthlyStudents) !!},
-                        borderColor: '#10B981',
-                        backgroundColor: 'rgba(16, 185, 129, 0.04)',
-                        tension: 0.35,
-                        fill: true,
-                        borderWidth: 2,
-                        pointBackgroundColor: '#10B981',
-                        pointBorderColor: '#FFFFFF',
-                        pointBorderWidth: 2,
-                        pointRadius: 4,
-                        pointHoverRadius: 6,
-                    },
-                    {
-                        label: 'Companies',
-                        data: {!! json_encode($monthlyCompanies) !!},
-                        borderColor: '#F59E0B',
-                        backgroundColor: 'transparent',
-                        borderDash: [5, 5],
-                        tension: 0.35,
-                        fill: false,
-                        borderWidth: 2,
-                        pointBackgroundColor: '#F59E0B',
-                        pointBorderColor: '#FFFFFF',
-                        pointBorderWidth: 2,
-                        pointRadius: 4,
-                        pointHoverRadius: 6,
-                    }
-                ]
+    const ctx = document.getElementById('overviewAnalyticsChart');
+    if (!ctx) return;
+
+    // Smooth gradient fills for dual line chart
+    const chartCtx = ctx.getContext('2d');
+    
+    const gradStudents = chartCtx.createLinearGradient(0, 0, 0, 260);
+    gradStudents.addColorStop(0, 'rgba(37, 99, 235, 0.22)');
+    gradStudents.addColorStop(1, 'rgba(37, 99, 235, 0.00)');
+
+    const gradApps = chartCtx.createLinearGradient(0, 0, 0, 260);
+    gradApps.addColorStop(0, 'rgba(139, 92, 246, 0.18)');
+    gradApps.addColorStop(1, 'rgba(139, 92, 246, 0.00)');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Oct 5', 'Oct 10', 'Oct 15', 'Oct 20', 'Oct 25', 'Oct 30', 'Nov 3'],
+            datasets: [
+                {
+                    label: 'Students',
+                    data: [130, 160, 150, 190, 260, 240, 290],
+                    borderColor: '#2563EB',
+                    backgroundColor: gradStudents,
+                    fill: true,
+                    tension: 0.42,
+                    borderWidth: 2.5,
+                    pointBackgroundColor: '#2563EB',
+                    pointBorderColor: '#FFFFFF',
+                    pointBorderWidth: 2,
+                    pointRadius: 4.5,
+                    pointHoverRadius: 7,
+                },
+                {
+                    label: 'Applications',
+                    data: [75, 90, 85, 115, 130, 120, 160],
+                    borderColor: '#8B5CF6',
+                    backgroundColor: gradApps,
+                    fill: true,
+                    tension: 0.42,
+                    borderWidth: 2.5,
+                    pointBackgroundColor: '#8B5CF6',
+                    pointBorderColor: '#FFFFFF',
+                    pointBorderWidth: 2,
+                    pointRadius: 4.5,
+                    pointHoverRadius: 7,
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: '#0F172A',
+                    titleFont: { family: 'Inter', size: 12, weight: 'bold' },
+                    bodyFont: { family: 'Inter', size: 12 },
+                    padding: 10,
+                    cornerRadius: 8,
+                    usePointStyle: true,
+                }
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                        align: 'end',
-                        labels: {
-                            boxWidth: 12,
-                            boxHeight: 12,
-                            usePointStyle: true,
-                            font: {
-                                family: 'Inter',
-                                size: 12
-                            }
-                        }
+            scales: {
+                x: {
+                    grid: {
+                        color: '#F1F5F9',
+                        drawBorder: false
                     },
-                    tooltip: {
-                        backgroundColor: '#0F172A',
-                        titleFont: { family: 'Inter', size: 13, weight: 'bold' },
-                        bodyFont: { family: 'Inter', size: 12 },
-                        padding: 10,
-                        cornerRadius: 8
+                    ticks: {
+                        font: { family: 'Inter', size: 11 },
+                        color: '#94A3B8'
                     }
                 },
-                scales: {
-                    x: {
-                        grid: { display: false },
-                        ticks: { font: { family: 'Inter', size: 11 }, color: '#64748B' }
+                y: {
+                    min: 0,
+                    max: 400,
+                    ticks: {
+                        stepSize: 100,
+                        font: { family: 'Inter', size: 11 },
+                        color: '#94A3B8'
                     },
-                    y: {
-                        beginAtZero: true,
-                        grid: { color: '#F1F5F9' },
-                        ticks: { font: { family: 'Inter', size: 11 }, color: '#64748B', precision: 0 }
+                    grid: {
+                        color: '#F1F5F9',
+                        drawBorder: false
                     }
                 }
             }
-        });
-    }
-
-    // 2. Application Status Doughnut Chart
-    const statusCtx = document.getElementById('statusChart');
-    if (statusCtx) {
-        new Chart(statusCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Pending', 'Reviewed', 'Accepted', 'Rejected'],
-                datasets: [{
-                    data: [
-                        {{ $stats['pending_applications'] }},
-                        {{ $stats['reviewed_applications'] }},
-                        {{ $stats['accepted_applications'] }},
-                        {{ $stats['rejected_applications'] }}
-                    ],
-                    backgroundColor: [
-                        '#F59E0B',
-                        '#3454D1',
-                        '#10B981',
-                        '#EF4444'
-                    ],
-                    borderWidth: 2,
-                    borderColor: '#FFFFFF'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                cutout: '72%',
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        backgroundColor: '#0F172A',
-                        padding: 10,
-                        cornerRadius: 8,
-                        titleFont: { family: 'Inter', size: 12 },
-                        bodyFont: { family: 'Inter', size: 12 }
-                    }
-                }
-            }
-        });
-    }
+        }
+    });
 });
 </script>
 

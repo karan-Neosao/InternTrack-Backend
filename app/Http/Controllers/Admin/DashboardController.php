@@ -75,12 +75,75 @@ class DashboardController extends Controller
             $monthlyApplications[] = Application::whereBetween('created_at', [$monthStart, $monthEnd])->count();
         }
 
+        // Top Companies by internship count
+        $topCompanies = User::where('role', 'company')
+            ->with('companyProfile')
+            ->withCount('internships')
+            ->orderByDesc('internships_count')
+            ->take(3)
+            ->get();
+
+        // Recent activity stream
+        $recentActivities = collect();
+
+        foreach ($recentStudents->take(2) as $s) {
+            $recentActivities->push([
+                'type' => 'student',
+                'title' => 'New student registered',
+                'subtitle' => $s->name,
+                'created_at' => $s->created_at,
+                'icon' => 'bi-person-fill',
+                'color' => '#2563EB',
+                'bg' => '#EFF6FF',
+            ]);
+        }
+
+        foreach ($recentCompanies->take(2) as $c) {
+            $recentActivities->push([
+                'type' => 'company',
+                'title' => 'New company added',
+                'subtitle' => $c->name,
+                'created_at' => $c->created_at,
+                'icon' => 'bi-buildings-fill',
+                'color' => '#10B981',
+                'bg' => '#ECFDF5',
+            ]);
+        }
+
+        foreach ($recentApplications->take(2) as $a) {
+            $recentActivities->push([
+                'type' => 'application',
+                'title' => 'New application received',
+                'subtitle' => $a->student->name ?? 'Candidate',
+                'created_at' => $a->created_at,
+                'icon' => 'bi-file-earmark-text-fill',
+                'color' => '#8B5CF6',
+                'bg' => '#F5F3FF',
+            ]);
+        }
+
+        foreach ($latestInternships->take(2) as $in) {
+            $recentActivities->push([
+                'type' => 'internship',
+                'title' => 'Internship updated',
+                'subtitle' => $in->title,
+                'created_at' => $in->updated_at ?? $in->created_at,
+                'icon' => 'bi-briefcase-fill',
+                'color' => '#F97316',
+                'bg' => '#FFF7ED',
+            ]);
+        }
+
+        $recentActivities = $recentActivities->sortByDesc('created_at')->take(4)->values();
+
         return view('admin.dashboard', compact(
             'stats',
             'recentApplications',
             'recentStudents',
             'recentCompanies',
             'latestInternships',
+            'topCompanies',
+            'recentActivities',
             'monthlyLabels',
             'monthlyStudents',
             'monthlyCompanies',
