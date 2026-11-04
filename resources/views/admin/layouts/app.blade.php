@@ -1008,43 +1008,6 @@
 
     </header>
 
-                <div class="dropdown-menu dropdown-menu-end shadow-lg p-0" style="width: 320px; border-radius: 12px; border: 1px solid var(--border-color);">
-                    <div class="p-3 border-bottom d-flex align-items-center justify-content-between">
-                        <div class="fw-bold text-dark">Notifications</div>
-                        @if($unreadCount > 0)
-                            <form action="{{ route('admin.notifications.mark-all-read') }}" method="POST" class="d-inline">
-                                @csrf
-                                <button type="submit" class="btn btn-link p-0 text-decoration-none text-primary" style="font-size:0.75rem;">
-                                    Mark all read
-                                </button>
-                            </form>
-                        @endif
-                    </div>
-
-                    <div style="max-height: 280px; overflow-y: auto;">
-                        @forelse($recentNotes as $note)
-                            <a href="{{ route('admin.notifications.show', $note->id) }}" class="d-flex align-items-start gap-2 p-3 text-decoration-none border-bottom text-dark {{ !$note->read_at ? 'bg-light' : '' }}">
-                                <div class="stat-icon primary flex-shrink-0" style="width:32px; height:32px; font-size:0.875rem;">
-                                    <i class="bi {{ $note->data['icon'] ?? 'bi-bell' }}"></i>
-                                </div>
-                                <div class="flex-grow-1" style="font-size:0.75rem;">
-                                    <div class="fw-semibold text-dark">{{ $note->data['title'] ?? 'Notification' }}</div>
-                                    <div class="text-secondary text-truncate" style="max-width:210px;">{{ $note->data['message'] ?? '' }}</div>
-                                    <div class="text-muted mt-1" style="font-size:0.6875rem;">{{ $note->created_at->diffForHumans() }}</div>
-                                </div>
-                            </a>
-                        @empty
-                            <div class="p-4 text-center text-secondary small">
-                                <i class="bi bi-bell-slash fs-4 d-block mb-1 text-muted"></i>
-                                No notifications yet
-                            </div>
-                        @endforelse
-                    </div>
-
-                    </div>
-                </div>
-            </div>
-
     <!-- Main Content Container -->
     <main class="content-container">
 

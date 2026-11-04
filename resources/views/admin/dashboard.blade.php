@@ -681,7 +681,7 @@
                                         <a href="{{ route('admin.students.show', $student->id) }}" class="action-icon-btn" title="View Profile">
                                             <i class="bi bi-eye"></i>
                                         </a>
-                                        <a href="{{ route('admin.students.edit', $student->id) }}" class="action-icon-btn" title="Edit">
+                                        <a href="{{ route('admin.students.show', $student->id) }}" class="action-icon-btn" title="Edit Profile">
                                             <i class="bi bi-pencil"></i>
                                         </a>
                                         <form action="{{ route('admin.students.destroy', $student->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete student?');">
