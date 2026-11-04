@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ActivityLog;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class SettingController extends Controller
 {
@@ -32,6 +33,9 @@ class SettingController extends Controller
                 $q->where('user_name', 'like', "%{$search}%")
                   ->orWhere('user_email', 'like', "%{$search}%")
                   ->orWhere('ip_address', 'like', "%{$search}%")
+                  ->orWhere('city', 'like', "%{$search}%")
+                  ->orWhere('country', 'like', "%{$search}%")
+                  ->orWhere('isp', 'like', "%{$search}%")
                   ->orWhere('action', 'like', "%{$search}%")
                   ->orWhere('device', 'like', "%{$search}%");
             });
@@ -49,6 +53,41 @@ class SettingController extends Controller
         ];
 
         return view('admin.settings.index', compact('admin', 'system', 'systemInfo', 'logs', 'activityStats', 'search'));
+    }
+
+    /**
+     * Assign a recognized person/company name to an IP address
+     */
+    public function labelIp(Request $request)
+    {
+        $request->validate([
+            'ip_address' => 'required|string|max:45',
+            'label' => 'required|string|max:150',
+        ]);
+
+        $ip = trim($request->input('ip_address'));
+        $label = trim($request->input('label'));
+
+        // Save or update mapping
+        DB::table('ip_labels')->updateOrInsert(
+            ['ip_address' => $ip],
+            [
+                'label' => $label,
+                'updated_at' => now(),
+                'created_at' => now(),
+            ]
+        );
+
+        // Update all unauthenticated log entries with this IP
+        ActivityLog::where('ip_address', $ip)
+            ->whereNull('user_id')
+            ->update([
+                'user_name' => $label,
+                'custom_label' => $label,
+            ]);
+
+        return redirect()->route('admin.settings', ['tab' => 'activity'])
+            ->with('success', "IP {$ip} has been assigned name: \"{$label}\". All future visits from this IP will show this name.");
     }
 
     public function clearActivityLogs()

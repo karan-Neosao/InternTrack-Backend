@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class ActivityLog extends Model
 {
@@ -17,6 +20,11 @@ class ActivityLog extends Model
         'user_email',
         'user_role',
         'ip_address',
+        'city',
+        'region',
+        'country',
+        'isp',
+        'custom_label',
         'user_agent',
         'device',
         'url',
@@ -30,6 +38,88 @@ class ActivityLog extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Accurately determine the real client IP (works behind Cloudflare, Render, proxies)
+     */
+    public static function getRealClientIp(Request $request): string
+    {
+        // 1. Cloudflare connecting IP
+        if ($cfIp = $request->server('HTTP_CF_CONNECTING_IP') ?: $request->header('CF-Connecting-IP')) {
+            $candidate = trim(explode(',', $cfIp)[0]);
+            if (filter_var($candidate, FILTER_VALIDATE_IP)) {
+                return $candidate;
+            }
+        }
+
+        // 2. X-Real-IP
+        if ($realIp = $request->server('HTTP_X_REAL_IP') ?: $request->header('X-Real-IP')) {
+            $candidate = trim(explode(',', $realIp)[0]);
+            if (filter_var($candidate, FILTER_VALIDATE_IP)) {
+                return $candidate;
+            }
+        }
+
+        // 3. X-Forwarded-For: The first non-private IP is the actual visitor
+        $forwarded = $request->server('HTTP_X_FORWARDED_FOR') ?: $request->header('X-Forwarded-For');
+        if ($forwarded) {
+            $ips = array_map('trim', explode(',', $forwarded));
+            foreach ($ips as $ip) {
+                if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+                    return $ip;
+                }
+            }
+            if (!empty($ips[0]) && filter_var($ips[0], FILTER_VALIDATE_IP)) {
+                return $ips[0];
+            }
+        }
+
+        return $request->ip() ?: '127.0.0.1';
+    }
+
+    /**
+     * Geolocation & ISP lookup for an IP address (cached 7 days)
+     */
+    public static function resolveIpDetails(string $ip): array
+    {
+        // For private, local, or loopback IPs
+        if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+            return [
+                'city' => 'Localhost',
+                'region' => 'Local Network',
+                'country' => 'India',
+                'isp' => 'Local Dev Gateway',
+            ];
+        }
+
+        return Cache::remember("geo_ip_{$ip}", 86400 * 7, function () use ($ip) {
+            try {
+                $response = Http::timeout(2)
+                    ->get("http://ip-api.com/json/{$ip}?fields=status,country,regionName,city,isp,org");
+
+                if ($response->successful()) {
+                    $data = $response->json();
+                    if (($data['status'] ?? '') === 'success') {
+                        return [
+                            'city' => $data['city'] ?? null,
+                            'region' => $data['regionName'] ?? null,
+                            'country' => $data['country'] ?? null,
+                            'isp' => $data['org'] ?? ($data['isp'] ?? null),
+                        ];
+                    }
+                }
+            } catch (\Throwable $e) {
+                // Return nulls on network issue or timeout
+            }
+
+            return [
+                'city' => null,
+                'region' => null,
+                'country' => null,
+                'isp' => null,
+            ];
+        });
     }
 
     /**
