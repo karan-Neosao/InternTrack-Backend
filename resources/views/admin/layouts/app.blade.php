@@ -840,18 +840,6 @@
             <span>Settings</span>
         </a>
 
-        <!-- Quick Access Section matching mockup -->
-        <div class="sidebar-section-title">QUICK ACCESS</div>
-
-        <a href="{{ route('admin.companies') }}" class="sidebar-link">
-            <i class="bi bi-buildings nav-icon"></i>
-            <span>Add Company</span>
-        </a>
-
-        <a href="{{ route('admin.reports') }}" class="sidebar-link">
-            <i class="bi bi-bar-chart nav-icon"></i>
-            <span>View Reports</span>
-        </a>
 
         <!-- Grow Together Promo Card matching mockup -->
         <div class="sidebar-promo-card">
