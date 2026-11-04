@@ -40,13 +40,19 @@
         padding: 22px 22px 0 22px;
         position: relative;
         overflow: hidden;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
         box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
     }
 
     .metric-saas-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+        transform: translateY(-4px);
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+        border-color: #CBD5E1;
+        color: inherit;
     }
 
     .metric-icon-box {
@@ -380,7 +386,7 @@
 
     <!-- Card 1: Total Students -->
     <div class="col-12 col-sm-6 col-xl-3">
-        <div class="metric-saas-card">
+        <a href="{{ route('admin.students') }}" class="metric-saas-card" title="View Students Directory">
             <div class="d-flex justify-content-between align-items-start">
                 <div class="d-flex align-items-center gap-3">
                     <div class="metric-icon-box" style="background: #EFF6FF; color: #2563EB;">
@@ -408,12 +414,12 @@
                     <path d="M0,45 C45,22 90,48 140,28 C190,10 240,42 300,24" fill="none" stroke="#2563EB" stroke-width="2.6"/>
                 </svg>
             </div>
-        </div>
+        </a>
     </div>
 
     <!-- Card 2: Total Companies -->
     <div class="col-12 col-sm-6 col-xl-3">
-        <div class="metric-saas-card">
+        <a href="{{ route('admin.companies') }}" class="metric-saas-card" title="View Companies Directory">
             <div class="d-flex justify-content-between align-items-start">
                 <div class="d-flex align-items-center gap-3">
                     <div class="metric-icon-box" style="background: #ECFDF5; color: #10B981;">
@@ -441,12 +447,12 @@
                     <path d="M0,48 C50,26 100,50 155,30 C205,14 250,38 300,20" fill="none" stroke="#10B981" stroke-width="2.6"/>
                 </svg>
             </div>
-        </div>
+        </a>
     </div>
 
     <!-- Card 3: Total Internships -->
     <div class="col-12 col-sm-6 col-xl-3">
-        <div class="metric-saas-card">
+        <a href="{{ route('admin.internships') }}" class="metric-saas-card" title="View Internships Management">
             <div class="d-flex justify-content-between align-items-start">
                 <div class="d-flex align-items-center gap-3">
                     <div class="metric-icon-box" style="background: #F5F3FF; color: #8B5CF6;">
@@ -474,12 +480,12 @@
                     <path d="M0,44 C45,20 95,44 148,25 C200,8 245,34 300,21" fill="none" stroke="#8B5CF6" stroke-width="2.6"/>
                 </svg>
             </div>
-        </div>
+        </a>
     </div>
 
     <!-- Card 4: Applications -->
     <div class="col-12 col-sm-6 col-xl-3">
-        <div class="metric-saas-card">
+        <a href="{{ route('admin.applications') }}" class="metric-saas-card" title="View Internship Applications">
             <div class="d-flex justify-content-between align-items-start">
                 <div class="d-flex align-items-center gap-3">
                     <div class="metric-icon-box" style="background: #FFF7ED; color: #F97316;">
@@ -507,7 +513,7 @@
                     <path d="M0,48 C50,28 100,48 152,32 C205,18 250,40 300,26" fill="none" stroke="#F97316" stroke-width="2.6"/>
                 </svg>
             </div>
-        </div>
+        </a>
     </div>
 
 </div>
