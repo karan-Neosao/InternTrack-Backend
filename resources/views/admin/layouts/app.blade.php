@@ -843,11 +843,6 @@
         <!-- Quick Access Section matching mockup -->
         <div class="sidebar-section-title">QUICK ACCESS</div>
 
-        <a href="{{ route('admin.students') }}" class="sidebar-link">
-            <i class="bi bi-plus-lg nav-icon"></i>
-            <span>Add Student</span>
-        </a>
-
         <a href="{{ route('admin.companies') }}" class="sidebar-link">
             <i class="bi bi-buildings nav-icon"></i>
             <span>Add Company</span>
