@@ -217,26 +217,7 @@ class AdminPanelTest extends TestCase
         $viewResponse->assertStatus(200);
         $viewResponse->assertSee('Live Visitor & User Activity Log', false);
 
-        // 3. Admin can label / name an IP address
-        \App\Models\ActivityLog::create([
-            'ip_address' => '103.21.124.89',
-            'user_name' => 'Guest Visitor',
-            'url' => 'http://localhost/admin/dashboard',
-            'method' => 'GET',
-        ]);
-
-        $labelResponse = $this->actingAs($this->admin)->post(route('admin.settings.activity-logs.label'), [
-            'ip_address' => '103.21.124.89',
-            'label' => 'Karan HR Recruiter',
-        ]);
-        $labelResponse->assertRedirect();
-        $this->assertDatabaseHas('ip_labels', [
-            'ip_address' => '103.21.124.89',
-            'label' => 'Karan HR Recruiter',
-        ]);
-        $this->assertEquals('Karan HR Recruiter', \App\Models\ActivityLog::where('ip_address', '103.21.124.89')->first()->user_name);
-
-        // 4. Admin can clear activity logs
+        // 3. Admin can clear activity logs
         $deleteResponse = $this->actingAs($this->admin)->delete(route('admin.settings.activity-logs.clear'));
         $deleteResponse->assertRedirect();
         $this->assertEquals(0, \App\Models\ActivityLog::count());

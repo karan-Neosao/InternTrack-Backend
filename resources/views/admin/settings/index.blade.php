@@ -419,23 +419,18 @@
                                 <td class="ps-3 py-3">
                                     <div class="d-flex align-items-center gap-2.5">
                                         <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold flex-shrink-0"
-                                             style="width: 38px; height: 38px; font-size: 0.85rem; background: {{ $log->user_role === 'admin' ? '#2563EB' : ($log->user_role === 'student' ? '#10B981' : ($log->user_role === 'company' ? '#8B5CF6' : ($log->custom_label ? '#F59E0B' : '#64748B'))) }};">
-                                            {{ strtoupper(substr($log->user_name ?: 'G', 0, 1)) }}
+                                             style="width: 38px; height: 38px; font-size: 0.85rem; background: {{ $log->user_role === 'admin' ? '#2563EB' : ($log->user_role === 'student' ? '#10B981' : ($log->user_role === 'company' ? '#8B5CF6' : '#64748B')) }};">
+                                            {{ strtoupper(substr($log->user_name ?: 'V', 0, 1)) }}
                                         </div>
-                                        <div class="text-truncate" style="max-width: 220px;">
-                                            <div class="d-flex align-items-center gap-1.5">
-                                                <span class="fw-bold text-dark text-truncate">{{ $log->user_name ?: 'Guest Visitor' }}</span>
-                                                @if($log->custom_label)
-                                                    <span class="badge bg-warning-subtle text-warning-emphasis border border-warning border-opacity-25 rounded-pill px-1.5 py-0.5" style="font-size:0.65rem;" title="Admin Named Visitor">
-                                                        <i class="bi bi-tag-fill"></i> Named
-                                                    </span>
-                                                @endif
+                                        <div class="text-truncate" style="max-width: 240px;">
+                                            <div class="fw-bold text-dark text-truncate">
+                                                {{ $log->user_name ?: 'Website Visitor' }}
                                             </div>
                                             <div class="text-secondary small text-truncate">
                                                 @if($log->city || $log->country)
                                                     <span><i class="bi bi-geo-alt-fill text-danger me-1"></i>{{ $log->city ? $log->city . ', ' : '' }}{{ $log->country }}</span>
                                                 @else
-                                                    {{ $log->user_email ?: 'Anonymous' }}
+                                                    {{ $log->user_email ?: 'Public Guest' }}
                                                 @endif
                                             </div>
                                         </div>
@@ -467,19 +462,10 @@
                                 <td>
                                     <div class="d-flex flex-column gap-1">
                                         <div class="d-inline-flex align-items-center gap-1.5">
-                                            <div class="d-inline-flex align-items-center gap-1.5 bg-light px-2 py-0.5 rounded-2 border">
+                                            <div class="d-inline-flex align-items-center gap-1.5 bg-light px-2.5 py-1 rounded-2 border">
                                                 <i class="bi bi-hdd-network text-muted small"></i>
                                                 <code class="text-dark fw-bold small">{{ $log->ip_address }}</code>
                                             </div>
-                                            <!-- Name Person / IP Button -->
-                                            <button type="button"
-                                                    class="btn btn-sm btn-outline-primary py-0 px-2 d-flex align-items-center gap-1"
-                                                    style="font-size: 0.72rem; height: 24px;"
-                                                    onclick="openLabelModal('{{ $log->ip_address }}', '{{ addslashes($log->custom_label ?: ($log->user_role === 'guest' ? '' : $log->user_name)) }}')"
-                                                    title="Name this person / IP">
-                                                <i class="bi bi-pencil-fill" style="font-size: 0.65rem;"></i>
-                                                <span>Name IP</span>
-                                            </button>
                                         </div>
                                         @if($log->isp)
                                             <div class="small text-secondary text-truncate" style="max-width: 220px;" title="{{ $log->isp }}">
@@ -560,47 +546,6 @@
 
 </div>
 
-<!-- Name / Label IP Modal -->
-<div class="modal fade" id="nameIpModal" tabindex="-1" aria-labelledby="nameIpModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow">
-            <div class="modal-header border-bottom">
-                <h5 class="modal-title fw-bold text-primary d-flex align-items-center gap-2" id="nameIpModalLabel">
-                    <i class="bi bi-person-badge-fill"></i>
-                    <span>Name This Visitor / IP Address</span>
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{ route('admin.settings.activity-logs.label') }}" method="POST">
-                @csrf
-                <div class="modal-body py-3">
-                    <div class="alert alert-info py-2 px-3 small border-0 mb-3" style="background: #EFF6FF; color: #1D4ED8;">
-                        <i class="bi bi-info-circle-fill me-1"></i>
-                        जेव्हा तुम्ही एखाद्या IP Address ला व्यक्तीचे नाव द्याल (उदा. "Karan", "Rohit HR", "Sneha Student"), तेव्हा त्या IP वरून येणाऱ्या <strong>सर्व भूतकाळातील आणि भविष्यातील व्हिजिट्स</strong> त्या व्यक्तीच्या नावाने दिसतील.
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label small fw-semibold text-muted">IP Address</label>
-                        <input type="text" name="ip_address" id="modalIpAddress" class="form-control bg-light fw-bold" readonly required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label small fw-semibold text-dark">या व्यक्तीचे / संस्थेचे नाव (Person / Organization Name) <span class="text-danger">*</span></label>
-                        <input type="text" name="label" id="modalLabelName" class="form-control" placeholder="उदा. Karan, Prof. Kulkarni, HR Infosys" required autofocus>
-                    </div>
-                </div>
-                <div class="modal-footer border-top">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary d-flex align-items-center gap-1.5 shadow-sm">
-                        <i class="bi bi-check-circle-fill"></i>
-                        <span>Save Name &amp; Identify</span>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 <!-- Clear Logs Confirmation Modal -->
 <div class="modal fade" id="clearLogsModal" tabindex="-1" aria-labelledby="clearLogsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -633,14 +578,6 @@
 </div>
 
 <script>
-function openLabelModal(ip, currentName) {
-    document.getElementById('modalIpAddress').value = ip;
-    document.getElementById('modalLabelName').value = currentName || '';
-    const modalEl = document.getElementById('nameIpModal');
-    const modal = new bootstrap.Modal(modalEl);
-    modal.show();
-}
-
 document.addEventListener('DOMContentLoaded', function() {
     // Keep tab selection state on reload or hash change
     const tabButtons = document.querySelectorAll('#settingsTabs button[data-bs-toggle="pill"]');

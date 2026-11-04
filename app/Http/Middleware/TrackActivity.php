@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\ActivityLog;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 
 class TrackActivity
 {
@@ -29,7 +28,7 @@ class TrackActivity
     }
 
     /**
-     * Record visitor / user activity
+     * Record visitor / user activity automatically
      */
     protected function logActivity(Request $request): void
     {
@@ -43,32 +42,26 @@ class TrackActivity
         $ip = ActivityLog::getRealClientIp($request);
         $user = auth()->user();
 
-        // Resolve Geolocation & ISP
+        // Automatically resolve Geolocation & ISP from IP
         $geo = ActivityLog::resolveIpDetails($ip);
         $city = $geo['city'] ?? null;
         $region = $geo['region'] ?? null;
         $country = $geo['country'] ?? null;
         $isp = $geo['isp'] ?? null;
 
-        // Check if admin has given a custom label to this IP
-        $customLabel = null;
-        try {
-            $customLabel = DB::table('ip_labels')->where('ip_address', $ip)->value('label');
-        } catch (\Throwable $e) {}
+        $userAgent = $request->userAgent();
+        $device = ActivityLog::parseDevice($userAgent);
+        $action = ActivityLog::determineAction($request);
+        $method = $request->method();
 
-        // Determine user details and identity
+        // Automatically determine user identity and display name
         if ($user) {
             $userId = $user->id;
             $userName = $user->name;
             $userEmail = $user->email;
             $userRole = $user->role ?? 'user';
-        } elseif ($customLabel) {
-            $userId = null;
-            $userName = $customLabel;
-            $userEmail = ($city ? "{$city}, " : "") . ($isp ?: "Visitor");
-            $userRole = 'guest';
         } else {
-            // Check if this IP previously belonged to an authenticated user
+            // Check if this IP previously belonged to a logged-in student/admin/company
             $pastUserLog = ActivityLog::where('ip_address', $ip)
                 ->whereNotNull('user_id')
                 ->whereNotNull('user_name')
@@ -77,29 +70,30 @@ class TrackActivity
 
             $userId = null;
             if ($pastUserLog) {
-                $userName = $pastUserLog->user_name . ' (Recognized)';
+                $userName = $pastUserLog->user_name . ' (Recognized User)';
                 $userEmail = $pastUserLog->user_email;
                 $userRole = $pastUserLog->user_role;
             } elseif ($city && $isp) {
-                $userName = "{$city} Visitor • {$isp}";
+                $userName = "{$city} Visitor ({$isp})";
                 $userEmail = "{$city}, {$country}";
                 $userRole = 'guest';
             } elseif ($city) {
                 $userName = "{$city} Visitor";
                 $userEmail = "{$city}, {$country}";
                 $userRole = 'guest';
+            } elseif ($isp) {
+                $userName = "{$isp} Visitor";
+                $userEmail = "Network: {$isp}";
+                $userRole = 'guest';
             } else {
-                $userName = 'Guest Visitor';
-                $userEmail = $isp ? "Network: {$isp}" : 'guest@visitor';
+                $platform = trim(explode('•', $device)[0] ?? 'Web');
+                $userName = "{$platform} Visitor";
+                $userEmail = 'Public Web Visitor';
                 $userRole = 'guest';
             }
         }
 
         $fullUrl = substr($request->fullUrl(), 0, 1000);
-        $userAgent = $request->userAgent();
-        $device = ActivityLog::parseDevice($userAgent);
-        $action = ActivityLog::determineAction($request);
-        $method = $request->method();
 
         // Throttle rapid consecutive refreshes by same IP & path within 20 seconds
         $recentDuplicate = ActivityLog::where('ip_address', $ip)
@@ -120,7 +114,6 @@ class TrackActivity
                     'region' => $region,
                     'country' => $country,
                     'isp' => $isp,
-                    'custom_label' => $customLabel,
                 ]);
             } else {
                 $recentDuplicate->touch();
@@ -138,7 +131,6 @@ class TrackActivity
             'region' => $region,
             'country' => $country,
             'isp' => $isp,
-            'custom_label' => $customLabel,
             'user_agent' => $userAgent ? substr($userAgent, 0, 500) : null,
             'device' => $device,
             'url' => $fullUrl,

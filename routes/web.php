@@ -86,7 +86,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/settings', [SettingController::class, 'index'])->name('settings');
         Route::put('/settings/profile', [SettingController::class, 'updateProfile'])->name('settings.profile');
         Route::put('/settings/password', [SettingController::class, 'updatePassword'])->name('settings.password');
-        Route::post('/settings/activity-logs/label', [SettingController::class, 'labelIp'])->name('settings.activity-logs.label');
         Route::delete('/settings/activity-logs', [SettingController::class, 'clearActivityLogs'])->name('settings.activity-logs.clear');
     });
 });
