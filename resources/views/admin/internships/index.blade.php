@@ -254,8 +254,8 @@
                         </td>
 
                         <td>
-                            <span class="badge bg-success-subtle text-success fw-bold px-2 py-1" style="font-size: 0.75rem;">
-                                {{ $job->stipend ? '₹' . number_format((float) preg_replace('/[^0-9.]/', '', $job->stipend)) : 'Unpaid' }}
+                            <span class="badge bg-success-subtle text-success fw-bold px-2.5 py-1" style="font-size: 0.75rem;">
+                                {{ (float) $job->stipend > 0 ? '₹' . number_format((float) $job->stipend) . '/mo' : 'Unpaid' }}
                             </span>
                         </td>
 

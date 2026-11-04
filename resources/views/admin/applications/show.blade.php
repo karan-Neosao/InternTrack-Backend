@@ -130,7 +130,7 @@
                     </div>
                     <div class="col-6">
                         <div class="text-muted small fw-semibold text-uppercase">Stipend</div>
-                        <span class="fw-bold text-success">{{ $application->internship->stipend > 0 ? '$' . number_format($application->internship->stipend, 2) : 'Unpaid' }}</span>
+                        <span class="fw-bold text-success">{{ $application->internship->stipend > 0 ? '₹' . number_format($application->internship->stipend) . '/month' : 'Unpaid' }}</span>
                     </div>
                 </div>
 

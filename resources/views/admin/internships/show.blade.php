@@ -95,7 +95,7 @@
             <div class="mb-3">
                 <div class="text-muted small fw-semibold text-uppercase">Monthly Stipend</div>
                 <div class="fs-5 fw-bold text-success mt-1">
-                    {{ $internship->stipend > 0 ? '$' . number_format($internship->stipend, 2) : 'Unpaid' }}
+                    {{ $internship->stipend > 0 ? '₹' . number_format($internship->stipend) . '/month' : 'Unpaid' }}
                 </div>
             </div>
 

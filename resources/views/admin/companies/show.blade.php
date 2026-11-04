@@ -194,7 +194,7 @@
                                 </td>
                                 <td>
                                     <span class="fw-semibold text-dark">
-                                        {{ $internship->stipend > 0 ? '$' . number_format($internship->stipend, 2) : 'Unpaid' }}
+                                        {{ $internship->stipend > 0 ? '₹' . number_format($internship->stipend) . '/mo' : 'Unpaid' }}
                                     </span>
                                 </td>
                                 <td class="text-muted small">
